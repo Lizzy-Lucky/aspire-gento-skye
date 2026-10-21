@@ -99,9 +99,9 @@ class FakeRobot:
         self.root = planar(*root_pose)
         self.eef_links = {arm: _Link(self, offset) for arm, offset in EEF_OFFSET.items()}
         self.sensors = {
-            f"{self.name}:zed_link:Camera:0": _Sensor(self, HEAD_OFFSET, size),
-            f"{self.name}:left_realsense_link:Camera:0": _Sensor(self, EEF_OFFSET["left"], size),
-            f"{self.name}:right_realsense_link:Camera:0": _Sensor(self, EEF_OFFSET["right"], size),
+            f"{self.name}:head_depth_camera_Link:Camera:0": _Sensor(self, HEAD_OFFSET, size),
+            f"{self.name}:left_wrist_camera_Link:Camera:0": _Sensor(self, EEF_OFFSET["left"], size),
+            f"{self.name}:right_wrist_camera_Link:Camera:0": _Sensor(self, EEF_OFFSET["right"], size),
         }
         self.grasping: dict[str, Any] = {"left": None, "right": None}
         self.keep_still_calls = 0

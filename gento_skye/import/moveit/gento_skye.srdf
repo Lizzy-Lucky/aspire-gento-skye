@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="gento_skye">
+  <!-- Planning groups: adjust in MoveIt Setup Assistant if needed. -->
+  <group name="left_arm">
+    <chain base_link="waist_Link_3" tip_link="left_eef_link" />
+  </group>
+  <group name="right_arm">
+    <chain base_link="waist_Link_3" tip_link="right_eef_link" />
+  </group>
+  <group name="torso">
+    <chain base_link="base_link" tip_link="waist_Link_3" />
+  </group>
+  <group name="left_gripper">
+    <link name="Arm_L10_Link" />
+    <link name="Arm_L11_Link" />
+  </group>
+  <end_effector name="left_hand" parent_link="left_eef_link" group="left_gripper" parent_group="left_arm" />
+  <group name="right_gripper">
+    <link name="Arm_R10_Link" />
+    <link name="Arm_R11_Link" />
+  </group>
+  <end_effector name="right_hand" parent_link="right_eef_link" group="right_gripper" parent_group="right_arm" />
+  <!-- Generated from the cuRobo self_collision_ignore list (apply_collision_spheres.py). -->
+  <disable_collisions link1="Arm_L10_Link" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Arm_L9_Link" link2="Arm_L10_Link" reason="Adjacent" />
+  <disable_collisions link1="Arm_L9_Link" link2="Arm_L11_Link" reason="Adjacent" />
+  <disable_collisions link1="Link3_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="Arm_L9_Link" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="Link4_L" reason="Adjacent" />
+  <disable_collisions link1="Link3_L" link2="Link6_L" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="Link7_L" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="Link8_L" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="Link_Left_wrist" reason="Never" />
+  <disable_collisions link1="Link3_L" link2="TCP_Link_L" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Arm_L9_Link" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Link5_L" reason="Adjacent" />
+  <disable_collisions link1="Link4_L" link2="Link6_L" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Link7_L" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Link8_L" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="Link_Left_wrist" reason="Never" />
+  <disable_collisions link1="Link4_L" link2="TCP_Link_L" reason="Never" />
+  <disable_collisions link1="Link5_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link5_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link5_L" link2="Link6_L" reason="Adjacent" />
+  <disable_collisions link1="Link5_L" link2="Link7_L" reason="Always" />
+  <disable_collisions link1="Link5_L" link2="Link_Left_wrist" reason="Never" />
+  <disable_collisions link1="Link6_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link6_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link6_L" link2="Arm_L9_Link" reason="Never" />
+  <disable_collisions link1="Link6_L" link2="Link7_L" reason="Adjacent" />
+  <disable_collisions link1="Link6_L" link2="Link_Left_wrist" reason="Never" />
+  <disable_collisions link1="Link7_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link7_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link7_L" link2="Arm_L9_Link" reason="Always" />
+  <disable_collisions link1="Link7_L" link2="Link8_L" reason="Always" />
+  <disable_collisions link1="Link7_L" link2="Link_Left_wrist" reason="Never" />
+  <disable_collisions link1="Link7_L" link2="TCP_Link_L" reason="Adjacent" />
+  <disable_collisions link1="Link8_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link8_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link8_L" link2="Arm_L9_Link" reason="Adjacent" />
+  <disable_collisions link1="Link8_L" link2="Link_Left_wrist" reason="Adjacent" />
+  <disable_collisions link1="Link_Left_wrist" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="Link_Left_wrist" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="Link_Left_wrist" link2="Arm_L9_Link" reason="Always" />
+  <disable_collisions link1="TCP_Link_L" link2="Arm_L10_Link" reason="Never" />
+  <disable_collisions link1="TCP_Link_L" link2="Arm_L11_Link" reason="Never" />
+  <disable_collisions link1="TCP_Link_L" link2="Arm_L9_Link" reason="Always" />
+  <disable_collisions link1="TCP_Link_L" link2="Link8_L" reason="Adjacent" />
+  <disable_collisions link1="TCP_Link_L" link2="Link_Left_wrist" reason="Never" />
+  <disable_collisions link1="Arm_R10_Link" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Arm_R9_Link" link2="Arm_R10_Link" reason="Adjacent" />
+  <disable_collisions link1="Arm_R9_Link" link2="Arm_R11_Link" reason="Adjacent" />
+  <disable_collisions link1="Link3_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Arm_R9_Link" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link1_L" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link2_L" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link3_L" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link4_R" reason="Adjacent" />
+  <disable_collisions link1="Link3_R" link2="Link6_R" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link7_R" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link8_R" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="Link_Right_wrist" reason="Never" />
+  <disable_collisions link1="Link3_R" link2="TCP_Link_R" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Arm_R9_Link" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Link1_L" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Link2_L" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Link5_R" reason="Adjacent" />
+  <disable_collisions link1="Link4_R" link2="Link6_R" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Link7_R" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Link8_R" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="Link_Right_wrist" reason="Never" />
+  <disable_collisions link1="Link4_R" link2="TCP_Link_R" reason="Never" />
+  <disable_collisions link1="Link5_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link5_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link5_R" link2="Link6_R" reason="Adjacent" />
+  <disable_collisions link1="Link5_R" link2="Link7_R" reason="Always" />
+  <disable_collisions link1="Link5_R" link2="Link_Right_wrist" reason="Never" />
+  <disable_collisions link1="Link6_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link6_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link6_R" link2="Arm_R9_Link" reason="Never" />
+  <disable_collisions link1="Link6_R" link2="Link7_R" reason="Adjacent" />
+  <disable_collisions link1="Link6_R" link2="Link_Right_wrist" reason="Never" />
+  <disable_collisions link1="Link7_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link7_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link7_R" link2="Arm_R9_Link" reason="Always" />
+  <disable_collisions link1="Link7_R" link2="Link8_R" reason="Always" />
+  <disable_collisions link1="Link7_R" link2="Link_Right_wrist" reason="Never" />
+  <disable_collisions link1="Link7_R" link2="TCP_Link_R" reason="Adjacent" />
+  <disable_collisions link1="Link8_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link8_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link8_R" link2="Arm_R9_Link" reason="Adjacent" />
+  <disable_collisions link1="Link8_R" link2="Link_Right_wrist" reason="Adjacent" />
+  <disable_collisions link1="Link_Right_wrist" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="Link_Right_wrist" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="Link_Right_wrist" link2="Arm_R9_Link" reason="Always" />
+  <disable_collisions link1="TCP_Link_R" link2="Arm_R10_Link" reason="Never" />
+  <disable_collisions link1="TCP_Link_R" link2="Arm_R11_Link" reason="Never" />
+  <disable_collisions link1="TCP_Link_R" link2="Arm_R9_Link" reason="Always" />
+  <disable_collisions link1="TCP_Link_R" link2="Link8_R" reason="Adjacent" />
+  <disable_collisions link1="TCP_Link_R" link2="Link_Right_wrist" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="Link1_L" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="Link2_L" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="Link2_R" reason="Adjacent" />
+  <disable_collisions link1="Link1_R" link2="Link3_L" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="Link4_L" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="Link4_R" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="Link1_R" link2="head_Link_2" reason="Never" />
+  <disable_collisions link1="Link1_L" link2="Link2_L" reason="Adjacent" />
+  <disable_collisions link1="Link1_L" link2="Link4_L" reason="Never" />
+  <disable_collisions link1="Link1_L" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="Link1_L" link2="head_Link_2" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="Link1_L" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="Link2_L" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="Link3_L" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="Link3_R" reason="Adjacent" />
+  <disable_collisions link1="Link2_R" link2="Link4_L" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="Link6_R" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="TCP_Link_R" reason="Never" />
+  <disable_collisions link1="Link2_R" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="Link1_L" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="Link1_R" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="Link2_L" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="Link2_R" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="Link3_L" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="Link3_R" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="head_Link_2" reason="Never" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="waist_Link_2" reason="Adjacent" />
+  <disable_collisions link1="waist_Link_1_prismatic" link2="waist_Link_3" reason="Always" />
+  <disable_collisions link1="waist_Link_2" link2="Link1_L" reason="Never" />
+  <disable_collisions link1="waist_Link_2" link2="Link1_R" reason="Never" />
+  <disable_collisions link1="waist_Link_2" link2="Link2_L" reason="Never" />
+  <disable_collisions link1="waist_Link_2" link2="Link2_R" reason="Never" />
+  <disable_collisions link1="waist_Link_2" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="waist_Link_2" link2="head_Link_2" reason="Never" />
+  <disable_collisions link1="waist_Link_2" link2="waist_Link_3" reason="Adjacent" />
+  <disable_collisions link1="waist_Link_3" link2="Link1_L" reason="Adjacent" />
+  <disable_collisions link1="waist_Link_3" link2="Link1_R" reason="Adjacent" />
+  <disable_collisions link1="waist_Link_3" link2="head_Link_1" reason="Adjacent" />
+  <disable_collisions link1="Link2_L" link2="Link3_L" reason="Adjacent" />
+  <disable_collisions link1="Link2_L" link2="Link6_L" reason="Never" />
+  <disable_collisions link1="Link2_L" link2="TCP_Link_L" reason="Never" />
+  <disable_collisions link1="Link2_L" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="base_link" link2="head_Link_1" reason="Never" />
+  <disable_collisions link1="base_link" link2="waist_Link_1_prismatic" reason="Adjacent" />
+  <disable_collisions link1="head_Link_1" link2="head_Link_2" reason="Adjacent" />
+</robot>

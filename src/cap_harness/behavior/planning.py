@@ -59,6 +59,17 @@ scenes of the supported tasks. Override with CAP_HARNESS_BEHAVIOR_BASE_LIMIT_M.
 """
 
 
+def _quat_xyzw_matrix(quat: Any) -> np.ndarray:
+    x, y, z, w = (float(value) for value in _to_numpy(quat).reshape(-1))
+    return np.array(
+        [
+            [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+            [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+            [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
+        ]
+    )
+
+
 def _to_numpy(value: Any) -> np.ndarray:
     if hasattr(value, "detach"):
         value = value.detach().cpu()
@@ -283,6 +294,190 @@ class OmniGibsonCuroboPlanner:
             return bool(np.asarray(verdict).reshape(-1)[0])
         except Exception:
             return False
+
+    def diagnose_current_configuration(
+        self, max_pairs: int = 8, emit: Any = None
+    ) -> list[str]:
+        """Explain why cuRobo treats the robot's current configuration as invalid.
+
+        Reports world and self collision separately, the links that touch the scene, the deepest
+        self-overlapping sphere pairs, joints at or past cuRobo's limits, and how far cuRobo's
+        forward kinematics puts each end effector from the simulator's. Each section fails on its
+        own and ``emit`` (if given) receives every line as soon as it is known. Bring-up use only.
+        """
+        import omnigibson.lazy as lazy
+        import torch
+        import yaml
+
+        lines: list[str] = []
+
+        def say(text: str) -> None:
+            lines.append(text)
+            if emit is not None:
+                emit(text)
+
+        generator, embodiment = self._generator_for()
+        emb = embodiment.DEFAULT
+        robot = self._adapter.robot
+        mg = generator.mg[emb]
+        tensor_args = generator.tensor_args
+        q = robot.get_joint_positions()
+        q_batch = q.unsqueeze(0)
+
+        def collisions() -> None:
+            generator.update_obstacles()
+            world_hit = bool(
+                _to_numpy(
+                    generator.check_collisions(q_batch, self_collision_check=False, skip_obstacle_update=True)
+                ).reshape(-1)[0]
+            )
+            any_hit = bool(
+                _to_numpy(
+                    generator.check_collisions(q_batch, self_collision_check=True, skip_obstacle_update=True)
+                ).reshape(-1)[0]
+            )
+            say(f"与场景碰撞: {world_hit}；含自身碰撞的总判定: {any_hit}")
+
+        cu_js = lazy.curobo.types.state.JointState(
+            position=tensor_args.to_device(q_batch),
+            joint_names=generator.robot_joint_names,
+        ).get_ordered_joint_state(mg.kinematics.joint_names)
+        config = mg.kinematics.kinematics_config
+        kin_state: dict[str, Any] = {}
+
+        def spheres_of_current() -> tuple[Any, np.ndarray, np.ndarray, dict[int, str], np.ndarray]:
+            if "state" not in kin_state:
+                kin_state["state"] = mg.compute_kinematics(cu_js)
+            spheres_t = kin_state["state"].robot_spheres
+            spheres = _to_numpy(spheres_t).reshape(-1, 4).astype(np.float64)
+            link_of_sphere = _to_numpy(config.link_sphere_idx_map).astype(int).reshape(-1)
+            name_of_link = {int(idx): name for name, idx in config.link_name_to_idx_map.items()}
+            return spheres_t, spheres, link_of_sphere, name_of_link, spheres[:, 3] > 0
+
+        def world_links() -> None:
+            # Keep one link's spheres, disable the rest, and ask the same world constraint.
+            spheres_t, _, link_of_sphere, name_of_link, active = spheres_of_current()
+            batch = spheres_t.reshape(1, -1, 4)
+            constraint = mg.rollout_fn.primitive_collision_constraint
+            hits: list[str] = []
+            for link_idx in sorted(set(link_of_sphere[active].tolist())):
+                masked = batch.clone()
+                others = torch.as_tensor(link_of_sphere != link_idx, device=masked.device)
+                masked[0, others, 3] = -100.0
+                with torch.no_grad():
+                    value = _to_numpy(constraint.forward(masked.unsqueeze(1))).reshape(-1)[0]
+                if value > 0:
+                    hits.append(name_of_link.get(link_idx, str(link_idx)))
+            say("与场景碰撞的连杆: " + (", ".join(hits) if hits else "无"))
+
+        def self_pairs() -> None:
+            # Pairwise sphere penetration, skipping same-link pairs and the ignore list.
+            _, spheres, link_of_sphere, name_of_link, active = spheres_of_current()
+            ignore: set[frozenset[str]] = set()
+            path = dict(robot.curobo_path)[emb]
+            kin = yaml.safe_load(Path(path).read_text())["robot_cfg"]["kinematics"]
+            for link, others_list in (kin.get("self_collision_ignore") or {}).items():
+                for other in others_list or []:
+                    ignore.add(frozenset((link, other)))
+            idx = np.nonzero(active)[0]
+            centers = spheres[idx, :3]
+            radii = spheres[idx, 3]
+            gaps = np.linalg.norm(centers[:, None, :] - centers[None, :, :], axis=-1)
+            depth = radii[:, None] + radii[None, :] - gaps
+            worst: dict[frozenset[str], float] = {}
+            for i in range(len(idx)):
+                for j in range(i + 1, len(idx)):
+                    if depth[i, j] <= 0:
+                        continue
+                    a = name_of_link.get(int(link_of_sphere[idx[i]]), "?")
+                    b = name_of_link.get(int(link_of_sphere[idx[j]]), "?")
+                    pair = frozenset((a, b))
+                    if a == b or pair in ignore:
+                        continue
+                    worst[pair] = max(worst.get(pair, 0.0), float(depth[i, j]))
+            ranked = sorted(worst.items(), key=lambda item: -item[1])[:max_pairs]
+            if not ranked:
+                say("自身重叠: 没有未忽略的碰撞球对相交")
+                return
+            say("自身重叠最深的连杆对（未在忽略列表里）:")
+            for pair, value in ranked:
+                a, b = sorted(pair)
+                say(f"  {a} <-> {b}  重叠 {value * 100:.1f} cm")
+
+        def joint_limits() -> None:
+            limits = _to_numpy(config.joint_limits.position).astype(np.float64)
+            positions = _to_numpy(cu_js.position).reshape(-1).astype(np.float64)
+            flagged = []
+            for name, value, low, high in zip(mg.kinematics.joint_names, positions, limits[0], limits[1]):
+                if value < low - 1e-4 or value > high + 1e-4:
+                    flagged.append(f"{name}={value:.3f} 超出 [{low:.3f}, {high:.3f}]")
+                elif min(value - low, high - value) < 0.02:
+                    flagged.append(f"{name}={value:.3f} 贴近限位 [{low:.3f}, {high:.3f}]")
+            say("关节限位: " + ("; ".join(flagged) if flagged else "都在限位内"))
+
+        def forward_kinematics() -> None:
+            # cuRobo's poses are in its base link frame; bring the simulator's into the same frame.
+            if "state" not in kin_state:
+                kin_state["state"] = mg.compute_kinematics(cu_js)
+            state = kin_state["state"]
+            base_pos, base_quat = robot.links[generator.base_link[emb]].get_position_orientation()
+            world_from_base = np.eye(4)
+            world_from_base[:3, :3] = _quat_xyzw_matrix(base_quat)
+            world_from_base[:3, 3] = _to_numpy(base_pos).reshape(-1)
+            base_from_world = np.linalg.inv(world_from_base)
+            fk_positions = {str(generator.ee_link[emb]): _to_numpy(state.ee_pos_seq).reshape(-1, 3)[0]}
+            names = getattr(state, "link_names", None)
+            link_pos = getattr(state, "link_pos_seq", None)
+            if names is not None and link_pos is not None:
+                rows = _to_numpy(link_pos).reshape(-1, 3)
+                for k, name in enumerate(names):
+                    if k < len(rows):
+                        fk_positions[str(name)] = rows[k]
+            for link_name, fk in fk_positions.items():
+                if link_name not in robot.links:
+                    continue
+                sim = _to_numpy(robot.links[link_name].get_position_orientation()[0]).reshape(-1)
+                sim_base = (base_from_world @ np.append(sim.astype(np.float64), 1.0))[:3]
+                error = float(np.linalg.norm(np.asarray(fk, dtype=np.float64) - sim_base))
+                say(f"正运动学 {link_name}: cuRobo 与仿真相差 {error * 100:.1f} cm")
+
+        def ik_probes() -> None:
+            # The bring-up reach: left eef held in place, then raised 5 cm, same orientation.
+            link_name = str(robot.eef_link_names["left"])
+            pos, quat = robot.links[link_name].get_position_orientation()
+            pos = _to_numpy(pos).reshape(-1).astype(np.float64)
+            quat = _to_numpy(quat).reshape(-1).astype(np.float64)
+            for label, lift in (("原地", 0.0), ("上抬 5 cm", 0.05)):
+                target = pos + np.array([0.0, 0.0, lift])
+                successes, _ = generator.compute_trajectories(
+                    target_pos={link_name: _batched(target, self._batch_size)},
+                    target_quat={link_name: _batched(quat, self._batch_size)},
+                    is_local=False,
+                    max_attempts=math.ceil(MAX_PLANNING_ATTEMPTS / self._batch_size),
+                    timeout=PLAN_TIMEOUT_S,
+                    ik_fail_return=MAX_IK_FAILURES_BEFORE_RETURN,
+                    success_ratio=1.0 / max(1, self._batch_size),
+                    ik_only=True,
+                    ik_world_collision_check=True,
+                    emb_sel=embodiment.ARM,
+                )
+                ok = bool(_to_numpy(successes).astype(bool).reshape(-1).any())
+                say(f"左手逆运动学（{label}）: {'有解' if ok else '无解'}")
+
+        sections = (
+            ("碰撞判定", collisions),
+            ("场景碰撞连杆", world_links),
+            ("自身重叠", self_pairs),
+            ("关节限位", joint_limits),
+            ("正运动学", forward_kinematics),
+            ("逆运动学自检", ik_probes),
+        )
+        for label, section in sections:
+            try:
+                section()
+            except Exception as exc:  # noqa: BLE001 - one failed section must not hide the rest
+                say(f"{label} 检查失败: {type(exc).__name__}: {exc}")
+        return lines
 
     def _held_objects(self) -> list[Any]:
         """Objects assisted-grasped by either hand (they ride with the hand, never obstacles)."""

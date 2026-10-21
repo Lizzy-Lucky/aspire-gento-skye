@@ -47,10 +47,37 @@ from cap_harness.contracts import (
 from cap_harness.errors import ApiError, ErrorCode
 from cap_harness.geometry import invert_transform, matrix_to_pose
 
+def _gento_base_pose(position, orientation):
+    """由 R1 Pro 采样得到 Gento 的底座位姿。数据集文件不改。"""
+    import math
+
+    px, py, pz = (float(value) for value in position)
+    ox, oy, oz, ow = (float(value) for value in orientation)
+    yaw = math.atan2(
+        2.0 * (ow * oz + ox * oy),
+        1.0 - 2.0 * (oy * oy + oz * oz),
+    )
+    yaw -= math.pi / 2
+    # dx、dy 是世界坐标，单位米；dz 抬高 base_link。一次只改一个。
+    dx, dy, dz = 0.0, 0.0, 0.0
+    half = yaw / 2.0
+    return (
+        [px + dx, py + dy, pz + dz],
+        [0.0, 0.0, math.sin(half), math.cos(half)],
+    )
+
+
+
+
+
 BASE_FRAME = "odom"
 CONTROL_FREQUENCY_HZ = 30.0
 CAMERA_LINKS: Mapping[str, str] = MappingProxyType(
-    {"head": "zed_link", "left_wrist": "left_realsense_link", "right_wrist": "right_realsense_link"}
+    {
+        "head": "head_depth_camera_Link",
+        "left_wrist": "left_wrist_camera_Link",
+        "right_wrist": "right_wrist_camera_Link",
+    }
 )
 TRAJECTORY_TOLERANCE_RAD = 0.01
 TRUNK_TOLERANCE_RAD = 0.05
@@ -566,6 +593,10 @@ class BehaviorAdapter:
         lower = _to_numpy(robot.joint_lower_limits).astype(np.float64)
         upper = _to_numpy(robot.joint_upper_limits).astype(np.float64)
         grippers = {arm: _to_numpy(robot.gripper_control_idx[arm]) for arm in robot.arm_names}
+        # OmniGibson's grasping_direction: "lower" means the lower limit is closed (R1 Pro);
+        # "upper" means the upper limit is closed (Gento Skye, whose fingers close as q grows).
+        if getattr(robot, "_grasping_direction", "lower") == "upper":
+            lower, upper = upper, lower
         return R1ProJointLayout(
             joint_count=int(q.size),
             base=_to_numpy(robot.base_idx),
@@ -629,6 +660,9 @@ class BehaviorAdapter:
         np.random.seed(seed)
         env.reset()
         self._load_task_instance(metadata, seed)
+        joints = getattr(self.robot, "joints", None)
+        if joints is not None:
+            print("GENTO_JOINTS", list(joints.keys()))
         observation, _ = env.reset()
         self._raw_observation = observation
         self._q_target = _to_numpy(self.robot.get_joint_positions()).astype(np.float64).copy()
@@ -637,6 +671,10 @@ class BehaviorAdapter:
         ]
         self._open_grippers()
         self._raw_step_settle(SETTLE_MIN_STEPS, SETTLE_MAX_STEPS)
+        if os.environ.get("GENTO_HOLD") == "1":
+            self._hold_for_inspection()
+        elif os.environ.get("GENTO_PLAN_DIAG") == "1":
+            self._print_planning_diagnosis()
         self._capture_frames()
         self._refresh_intrinsics()
         self._elapsed_steps = 0
@@ -662,19 +700,89 @@ class BehaviorAdapter:
             self._run_observer.on_reset(observation, record)
         return observation
 
-    def _load_task_instance(self, metadata: BehaviorTaskMetadata, instance_id: int) -> None:
-        env = self._require_env()
-        loader = getattr(env, "load_task_instance", None)
-        if callable(loader):  # test doubles and future upstream helpers
-            loader(instance_id)
-            return
+    # 手指连杆局部坐标里的手指中心（取自 cuRobo 碰撞球）。Arm_R11_Joint 翻转过，所以它的 y、z 与左手不同。
+    _GENTO_FINGER_CENTERS = {
+        "Arm_L10_Link": (-0.001, -0.16, 0.056),
+        "Arm_L11_Link": (0.001, -0.16, -0.056),
+        "Arm_R10_Link": (-0.001, -0.16, 0.056),
+        "Arm_R11_Link": (0.0, 1.953, 0.056),
+    }
+
+    @staticmethod
+    def _quat_xyzw_to_matrix(quat: Any) -> np.ndarray:
+        x, y, z, w = (float(value) for value in _to_numpy(quat))
+        return np.array(
+            [
+                [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+                [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+                [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
+            ]
+        )
+
+    def _print_eef_axes(self) -> None:
+        robot = self.robot
+        for arm in ("left", "right"):
+            eef = robot.eef_links[arm]
+            eef_pos, eef_quat = eef.get_position_orientation()
+            eef_pos = _to_numpy(eef_pos).astype(np.float64)
+            rot = self._quat_xyzw_to_matrix(eef_quat)
+            print(f"GENTO_EEF {arm} {eef.name} 世界位置 {np.round(eef_pos, 3).tolist()}", flush=True)
+            for index, axis in enumerate("XYZ"):
+                print(f"  {axis} 轴在世界里指向 {np.round(rot[:, index], 3).tolist()}", flush=True)
+            for finger in robot.finger_links[arm]:
+                center = self._GENTO_FINGER_CENTERS.get(finger.body_name)
+                if center is None:
+                    continue
+                link_pos, link_quat = finger.get_position_orientation()
+                world = _to_numpy(link_pos).astype(np.float64) + self._quat_xyzw_to_matrix(link_quat) @ np.array(center)
+                local = rot.T @ (world - eef_pos)
+                print(f"  {finger.body_name} 中心在末端坐标里 {np.round(local, 3).tolist()}", flush=True)
+        print("  正确时：两根手指的 z 都为正（Z 指向指尖），y 一正一负（Y 横跨两指）。", flush=True)
+
+    def _print_planning_diagnosis(self) -> None:
+        print("GENTO_PLAN 正在用 cuRobo 检查复位姿态（第一次要预热，约 1 分钟）……", flush=True)
+        try:
+            self.planner().diagnose_current_configuration(
+                emit=lambda line: print(f"GENTO_PLAN {line}", flush=True)
+            )
+        except Exception as exc:  # noqa: BLE001 - diagnostics must not abort the run
+            print(f"GENTO_PLAN 诊断失败: {type(exc).__name__}: {exc}", flush=True)
+
+    def _hold_for_inspection(self) -> None:
+        """停在复位姿态，持续渲染让窗口可操作，直到终端按回车。不推进物理。"""
+        import select
+        import sys
+
+        try:
+            self._print_eef_axes()
+        except Exception as exc:  # noqa: BLE001 - diagnostics must not abort the hold
+            print(f"GENTO_EEF 读取失败: {exc}", flush=True)
+        self._print_planning_diagnosis()
+        print(
+            "GENTO_HOLD: 窗口停在复位姿态，可以操作。Stage 里搜 left_eef_link，按 W 看坐标轴。"
+            "看完后在这个终端按回车继续。",
+            flush=True,
+        )
+        og = self._og
+        while True:
+            try:
+                ready, _, _ = select.select([sys.stdin], [], [], 0.0)
+            except (OSError, ValueError):
+                break
+            if ready:
+                sys.stdin.readline()
+                break
+            if og is None:
+                break
+            og.sim.render()
+
+    def _read_task_instance_state(self, metadata: BehaviorTaskMetadata, instance_id: int) -> dict:
         import json
 
         from omnigibson.utils.asset_utils import get_task_instance_path
-        from omnigibson.utils.bddl_utils import is_system_bddl_inst
         from omnigibson.utils.python_utils import recursively_convert_to_torch
 
-        og = self._og
+        env = self._require_env()
         task = env.task
         scene_model = task.scene_name
         tro_filename = task.get_cached_activity_scene_filename(
@@ -694,17 +802,36 @@ class BehaviorAdapter:
                 f"{task.activity_name} in scene {scene_model}"
             )
         with open(path, encoding="utf-8") as handle:
-            tro_state = recursively_convert_to_torch(json.load(handle))
+            return recursively_convert_to_torch(json.load(handle))
+
+    def _load_task_instance(self, metadata: BehaviorTaskMetadata, instance_id: int) -> None:
+        env = self._require_env()
+        loader = getattr(env, "load_task_instance", None)
+        if callable(loader):  # test doubles and future upstream helpers
+            loader(instance_id)
+            return
+        from omnigibson.utils.bddl_utils import is_system_bddl_inst
+
+        og = self._og
+        task = env.task
+        tro_state = self._read_task_instance_state(metadata, instance_id)
         robot = self.robot
         for key, state in tro_state.items():
             if key == "robot_poses":
                 poses = {name.lower(): value for name, value in state.items()}
-                available = poses.get("robot") or poses.get(robot.model)
+                # Challenge instances store base poses for R1Pro, Fetch, R1, Stretch, and Tiago.
+                # Gento Skye has none; reuse the R1 Pro base position and orientation.
+                available = poses.get("robot") or poses.get(robot.model) or poses.get("r1pro")
                 if available is None:
                     raise KeyError(f"no presampled robot pose for {robot.model!r}")
-                robot.set_position_orientation(
+                position, orientation = _gento_base_pose(
                     available[0]["position"], available[0]["orientation"]
                 )
+                available[0]["position"] = position
+                available[0]["orientation"] = orientation
+                # 第二次复位同样只认 robot 或 gento_skye。实例里的键是 R1Pro。
+                state["robot"] = available
+                robot.set_position_orientation(position, orientation)
                 env.scene.write_task_metadata(key=key, data=state)
             else:
                 task.object_scope[key].load_state(state, serialized=False)

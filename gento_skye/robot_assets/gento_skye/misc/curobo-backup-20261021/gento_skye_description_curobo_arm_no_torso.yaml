@@ -1,0 +1,700 @@
+robot_cfg:
+  kinematics:
+    base_link: base_footprint_x
+    collision_link_names:
+    - base_link
+    - ZQ_Link
+    - ZQL_Link
+    - YQ_Link
+    - YQL_Link
+    - ZH_Link
+    - ZHL_Link
+    - YH_Link
+    - YHL_Link
+    - ZLD_Link
+    - YLD_Link
+    - C1_Link
+    - C2_Link
+    - C3_Link
+    - C4_Link
+    - C5_Link
+    - C6_Link
+    - C7_Link
+    - C8_Link
+    - XJ_Link
+    - waist_Link_1_prismatic
+    - waist_Link_2
+    - waist_Link_3
+    - Link1_R
+    - Link2_R
+    - Link3_R
+    - Link4_R
+    - Link5_R
+    - Link6_R
+    - Link7_R
+    - TCP_Link_R
+    - Link8_R
+    - Link_Right_wrist
+    - Arm_R9_Link
+    - Arm_R10_Link
+    - Arm_R11_Link
+    - Link1_L
+    - Link2_L
+    - Link3_L
+    - Link4_L
+    - Link5_L
+    - Link6_L
+    - Link7_L
+    - TCP_Link_L
+    - Link8_L
+    - Link_Left_wrist
+    - Arm_L9_Link
+    - Arm_L10_Link
+    - Arm_L11_Link
+    - head_Link_1
+    - head_Link_2
+    - attached_object_left_eef_link
+    - attached_object_right_eef_link
+    collision_sphere_buffer: 0.002
+    collision_spheres:
+      Arm_L10_Link:
+      - center:
+        - -0.00146
+        - -0.15962
+        - 0.05553
+        radius: 0.04762
+      Arm_L11_Link:
+      - center:
+        - 0.00146
+        - -0.15962
+        - -0.05553
+        radius: 0.04762
+      Arm_L9_Link:
+      - center:
+        - -0.00203
+        - -0.08355
+        - 0.0
+        radius: 0.0745
+      Arm_R10_Link:
+      - center:
+        - -0.00146
+        - -0.15962
+        - 0.05553
+        radius: 0.04762
+      Arm_R11_Link:
+      - center:
+        - 0.00011
+        - 1.95262
+        - 0.05553
+        radius: 0.04762
+      Arm_R9_Link:
+      - center:
+        - -0.00203
+        - -0.08355
+        - 0.0
+        radius: 0.0745
+      C1_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C2_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C3_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C4_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C5_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C6_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C7_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      C8_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.0152
+        radius: 0.02574
+      Link1_L:
+      - center:
+        - -0.0
+        - 0.0
+        - -0.03934
+        radius: 0.09516
+      Link1_R:
+      - center:
+        - -0.0
+        - 0.0
+        - -0.03934
+        radius: 0.09516
+      Link2_L:
+      - center:
+        - 0.0
+        - 0.04533
+        - -0.0
+        radius: 0.10267
+      Link2_R:
+      - center:
+        - 0.0
+        - 0.04533
+        - -0.0
+        radius: 0.10267
+      Link3_L:
+      - center:
+        - 0.01106
+        - 0.0
+        - -0.04658
+        radius: 0.09692
+      Link3_R:
+      - center:
+        - 0.01106
+        - 0.0
+        - -0.04658
+        radius: 0.09692
+      Link4_L:
+      - center:
+        - 0.00427
+        - -0.03529
+        - 0.0
+        radius: 0.08571
+      Link4_R:
+      - center:
+        - 0.00427
+        - -0.03529
+        - 0.0
+        radius: 0.08571
+      Link5_L:
+      - center:
+        - -0.0
+        - 0.0
+        - -0.08725
+        radius: 0.11075
+      Link5_R:
+      - center:
+        - 0.0
+        - 0.0
+        - -0.08725
+        radius: 0.11075
+      Link6_L:
+      - center:
+        - 0.0
+        - 0.00225
+        - 0.0
+        radius: 0.045
+      Link6_R:
+      - center:
+        - 0.0
+        - 0.00225
+        - 0.0
+        radius: 0.045
+      Link7_L:
+      - center:
+        - 0.0
+        - -0.02832
+        - -0.00075
+        radius: 0.06668
+      Link7_R:
+      - center:
+        - 0.0
+        - -0.02832
+        - -0.00075
+        radius: 0.06668
+      Link8_L:
+      - center:
+        - 0.02287
+        - 0.0
+        - 0.03157
+        radius: 0.05887
+      Link8_R:
+      - center:
+        - 0.02287
+        - 0.0
+        - 0.03157
+        radius: 0.05887
+      Link_Left_wrist:
+      - center:
+        - -0.0
+        - 0.02075
+        - -1.0e-05
+        radius: 0.02075
+      Link_Right_wrist:
+      - center:
+        - -1.0e-05
+        - 0.02075
+        - 0.0
+        radius: 0.02075
+      TCP_Link_L:
+      - center:
+        - 0.0
+        - -0.0
+        - 0.0
+        radius: 0.01
+      TCP_Link_R:
+      - center:
+        - 0.0
+        - -0.0
+        - 0.0
+        radius: 0.01
+      XJ_Link:
+      - center:
+        - -0.01747
+        - 0.0
+        - -0.00854
+        radius: 0.04447
+      YHL_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - 0.013
+        radius: 0.07
+      YH_Link:
+      - center:
+        - 0.00072
+        - 0.01838
+        - -0.07875
+        radius: 0.08025
+      YLD_Link:
+      - center:
+        - -0.01228
+        - 0.0
+        - -0.01743
+        radius: 0.04621
+      YQL_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - 0.013
+        radius: 0.07
+      YQ_Link:
+      - center:
+        - 0.00072
+        - 0.01838
+        - -0.07875
+        radius: 0.08025
+      ZHL_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - 0.013
+        radius: 0.07
+      ZH_Link:
+      - center:
+        - -0.00072
+        - -0.01838
+        - -0.07875
+        radius: 0.08025
+      ZLD_Link:
+      - center:
+        - -0.01228
+        - 0.0
+        - -0.01743
+        radius: 0.04621
+      ZQL_Link:
+      - center:
+        - 0.0
+        - 0.0
+        - 0.013
+        radius: 0.07
+      ZQ_Link:
+      - center:
+        - -0.00072
+        - -0.01838
+        - -0.07875
+        radius: 0.08025
+      base_link:
+      - center:
+        - 0.00596
+        - 0.0
+        - 0.774
+        radius: 0.735
+      head_Link_1:
+      - center:
+        - 9.0e-05
+        - -0.01641
+        - -0.02375
+        radius: 0.07375
+      head_Link_2:
+      - center:
+        - 0.03437
+        - 0.04375
+        - 0.00023
+        radius: 0.09893
+      waist_Link_1_prismatic:
+      - center:
+        - -0.06141
+        - -0.0
+        - -1.0e-05
+        radius: 0.13859
+      waist_Link_2:
+      - center:
+        - 0.00211
+        - 0.00986
+        - 0.0
+        radius: 0.12829
+      waist_Link_3:
+      - center:
+        - 0.01339
+        - 0.0
+        - 0.33017
+        radius: 0.23217
+    cspace:
+      cspace_distance_weight:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      joint_names:
+      - base_footprint_x_joint
+      - base_footprint_y_joint
+      - base_footprint_z_joint
+      - base_footprint_rx_joint
+      - base_footprint_ry_joint
+      - base_footprint_rz_joint
+      - waist_joint_1
+      - waist_joint_2
+      - waist_joint_3
+      - Head_J1_Joint
+      - Head_J2_Joint
+      - Joint1_L
+      - Joint2_L
+      - Joint3_L
+      - Joint4_L
+      - Joint5_L
+      - Joint6_L
+      - Joint7_L
+      - Arm_L10_Joint
+      - Arm_L11_Joint
+      - Joint1_R
+      - Joint2_R
+      - Joint3_R
+      - Joint4_R
+      - Joint5_R
+      - Joint6_R
+      - Joint7_R
+      - Arm_R10_Joint
+      - Arm_R11_Joint
+      max_acceleration: 15.0
+      max_jerk: 500.0
+      null_space_weight:
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      - 1
+      retract_config: null
+    ee_link: left_eef_link
+    external_asset_path: null
+    extra_collision_spheres:
+      attached_object_left_eef_link: 32
+      attached_object_right_eef_link: 32
+    extra_links:
+      attached_object_left_eef_link:
+        fixed_transform:
+        - 0
+        - 0
+        - 0
+        - 1
+        - 0
+        - 0
+        - 0
+        joint_name: attached_object_left_eef_link_joint
+        joint_type: FIXED
+        link_name: attached_object_left_eef_link
+        parent_link_name: left_eef_link
+      attached_object_right_eef_link:
+        fixed_transform:
+        - 0
+        - 0
+        - 0
+        - 1
+        - 0
+        - 0
+        - 0
+        joint_name: attached_object_right_eef_link_joint
+        joint_type: FIXED
+        link_name: attached_object_right_eef_link
+        parent_link_name: right_eef_link
+    link_names:
+    - right_eef_link
+    lock_joints:
+      Arm_L10_Joint: null
+      Arm_L11_Joint: null
+      Arm_R10_Joint: null
+      Arm_R11_Joint: null
+      base_footprint_rx_joint: null
+      base_footprint_ry_joint: null
+      base_footprint_rz_joint: null
+      base_footprint_x_joint: null
+      base_footprint_y_joint: null
+      base_footprint_z_joint: null
+      waist_joint_1: null
+      waist_joint_2: null
+      waist_joint_3: null
+    mesh_link_names:
+    - base_link
+    - ZQ_Link
+    - ZQL_Link
+    - YQ_Link
+    - YQL_Link
+    - ZH_Link
+    - ZHL_Link
+    - YH_Link
+    - YHL_Link
+    - ZLD_Link
+    - YLD_Link
+    - C1_Link
+    - C2_Link
+    - C3_Link
+    - C4_Link
+    - C5_Link
+    - C6_Link
+    - C7_Link
+    - C8_Link
+    - XJ_Link
+    - waist_Link_1_prismatic
+    - waist_Link_2
+    - waist_Link_3
+    - Link1_R
+    - Link2_R
+    - Link3_R
+    - Link4_R
+    - Link5_R
+    - Link6_R
+    - Link7_R
+    - TCP_Link_R
+    - Link8_R
+    - Link_Right_wrist
+    - Arm_R9_Link
+    - Arm_R10_Link
+    - Arm_R11_Link
+    - Link1_L
+    - Link2_L
+    - Link3_L
+    - Link4_L
+    - Link5_L
+    - Link6_L
+    - Link7_L
+    - TCP_Link_L
+    - Link8_L
+    - Link_Left_wrist
+    - Arm_L9_Link
+    - Arm_L10_Link
+    - Arm_L11_Link
+    - head_Link_1
+    - head_Link_2
+    - attached_object_left_eef_link
+    - attached_object_right_eef_link
+    self_collision_buffer: {}
+    self_collision_ignore:
+      Arm_L10_Link:
+      - Arm_L11_Link
+      - attached_object_left_eef_link
+      Arm_L11_Link:
+      - attached_object_left_eef_link
+      Arm_L9_Link:
+      - Arm_L10_Link
+      - Arm_L11_Link
+      Arm_R10_Link:
+      - Arm_R11_Link
+      - attached_object_right_eef_link
+      Arm_R11_Link:
+      - attached_object_right_eef_link
+      Arm_R9_Link:
+      - Arm_R10_Link
+      - Arm_R11_Link
+      Link1_L:
+      - Link2_L
+      Link1_R:
+      - Link2_R
+      Link2_L:
+      - Link3_L
+      Link2_R:
+      - Link3_R
+      Link3_L:
+      - Link4_L
+      Link3_R:
+      - Link4_R
+      Link4_L:
+      - Link5_L
+      Link4_R:
+      - Link5_R
+      Link5_L:
+      - Link6_L
+      Link5_R:
+      - Link6_R
+      Link6_L:
+      - Link7_L
+      Link6_R:
+      - Link7_R
+      Link7_L:
+      - TCP_Link_L
+      Link7_R:
+      - TCP_Link_R
+      Link8_L:
+      - Link_Left_wrist
+      - Arm_L9_Link
+      Link8_R:
+      - Link_Right_wrist
+      - Arm_R9_Link
+      TCP_Link_L:
+      - Link8_L
+      TCP_Link_R:
+      - Link8_R
+      YH_Link:
+      - YHL_Link
+      YQ_Link:
+      - YQL_Link
+      ZH_Link:
+      - ZHL_Link
+      ZQ_Link:
+      - ZQL_Link
+      base_link:
+      - ZQ_Link
+      - YQ_Link
+      - ZH_Link
+      - YH_Link
+      - ZLD_Link
+      - YLD_Link
+      - C1_Link
+      - C2_Link
+      - C3_Link
+      - C4_Link
+      - C5_Link
+      - C6_Link
+      - C7_Link
+      - C8_Link
+      - IMU_Link
+      - XJ_Link
+      - waist_Link_1_prismatic
+      head_Link_1:
+      - head_Link_2
+      head_Link_2:
+      - head_depth_camera_Link
+      - left_eye_camera_Link
+      - right_eye_camera_Link
+      waist_Link_1_prismatic:
+      - waist_Link_2
+      waist_Link_2:
+      - waist_Link_3
+      waist_Link_3:
+      - Link1_R
+      - Link1_L
+      - head_Link_1
+      - waist_depth_camera_Link
+    usd_flip_joint_limits:
+    - ZQ
+    - YQ
+    - ZH
+    - YH
+    - Arm_R10_Joint
+    - Arm_R11_Joint
+    - Arm_L10_Joint
+    usd_flip_joints:
+      Arm_L10_Joint: Z
+      Arm_L11_Joint: Z
+      Arm_R10_Joint: Z
+      Arm_R11_Joint: Z
+      Head_J1_Joint: Z
+      Head_J2_Joint: Z
+      Joint1_L: Z
+      Joint1_R: Z
+      Joint2_L: Z
+      Joint2_R: Z
+      Joint3_L: Z
+      Joint3_R: Z
+      Joint4_L: Z
+      Joint4_R: Z
+      Joint5_L: Z
+      Joint5_R: Z
+      Joint6_L: Z
+      Joint6_R: Z
+      Joint7_L: Z
+      Joint7_R: Z
+      YH: Z
+      YHL: Z
+      YQ: Z
+      YQL: Z
+      ZH: Z
+      ZHL: Z
+      ZQ: Z
+      ZQL: Z
+      waist_joint_1: Z
+      waist_joint_2: Z
+      waist_joint_3: Z
+    usd_robot_root: /gento_skye
+    use_global_cumul: true

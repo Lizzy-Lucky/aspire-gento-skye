@@ -8,6 +8,8 @@ import base64
 import functools
 import io
 import logging
+import os
+from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
@@ -208,6 +210,14 @@ async def segment_point(request: PointPromptRequest) -> PointPromptResponse:
         raise HTTPException(status_code=500, detail=f"Inference failed: {exc}") from exc
 
 
+def _use_local_sam3_weights() -> None:
+    """Load facebook/sam3 from a pre-seeded hub cache when the hub itself is unreachable."""
+    hf_home = Path(os.environ.get("HF_HOME", Path.home() / ".cache" / "huggingface"))
+    if any((hf_home / "hub" / "models--facebook--sam3" / "snapshots").glob("*/sam3.pt")):
+        os.environ.setdefault("HF_HUB_OFFLINE", "1")
+        LOGGER.info("Using local SAM3 weights under %s", hf_home)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the cap-harness SAM3 service")
     parser.add_argument("--device", default="cuda")
@@ -223,6 +233,7 @@ def main() -> None:
         if "cuda" in args.device:
             torch.cuda.set_device(int(args.device.split(":")[-1]) if ":" in args.device else 0)
     LOGGER.info("Loading SAM3 model on %s", args.device)
+    _use_local_sam3_weights()
     _MODEL = build_sam3_image_model(enable_inst_interactivity=True).to(args.device)
     _PROCESSOR = Sam3Processor(_MODEL, device=args.device, confidence_threshold=0.0)
     uvicorn.run(app, host=args.host, port=args.port)

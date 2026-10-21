@@ -1,0 +1,169 @@
+raw_controller_order:
+- base
+- trunk
+- camera
+- arm_left
+- gripper_left
+- arm_right
+- gripper_right
+linear_velocity_gain_for_primitives: 0.3
+angular_velocity_gain_for_primitives: 0.2
+default_joint_pos: &id001
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.5
+- 0.0
+- 0.0
+- 0.0
+- 1.57
+- -1.57
+- 0.0
+- -1.13
+- -1.13
+- -1.18
+- 1.18
+- -1.57
+- -1.57
+- -0.423
+- 0.423
+- -0.147
+- -0.147
+- 0.298
+- -0.298
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+default_controllers:
+  base: HolonomicBaseJointController
+  trunk: JointController
+  camera: JointController
+  arm_left: InverseKinematicsController
+  arm_right: InverseKinematicsController
+  gripper_left: MultiFingerGripperController
+  gripper_right: MultiFingerGripperController
+self_collisions: false
+base_footprint_link_name: base_link
+disabled_collision_pairs:
+- - Arm_L10_Link
+  - Arm_L11_Link
+- - Arm_R10_Link
+  - Arm_R11_Link
+holonomic_base:
+  force_sphere_wheel_approximation: true
+locomotion:
+  base_joint_names:
+  - base_footprint_x_joint
+  - base_footprint_y_joint
+  - base_footprint_rz_joint
+  floor_touching_base_link_names:
+  - ZQL_Link
+  - YQL_Link
+  - ZHL_Link
+  - YHL_Link
+articulated_trunk:
+  trunk_link_names:
+  - waist_Link_1_prismatic
+  - waist_Link_2
+  - waist_Link_3
+  trunk_joint_names:
+  - waist_joint_1
+  - waist_joint_2
+  - waist_joint_3
+active_camera:
+  camera_joint_names:
+  - Head_J1_Joint
+  - Head_J2_Joint
+mobile_manipulation:
+  tucked_default_joint_pos: *id001
+  untucked_default_joint_pos: *id001
+manipulation:
+  n_arms: 2
+  arm_names:
+  - left
+  - right
+  arm_link_names:
+    left:
+    - Link1_L
+    - Link2_L
+    - Link3_L
+    - Link4_L
+    - Link5_L
+    - Link6_L
+    - Link7_L
+    right:
+    - Link1_R
+    - Link2_R
+    - Link3_R
+    - Link4_R
+    - Link5_R
+    - Link6_R
+    - Link7_R
+  arm_joint_names:
+    left:
+    - Joint1_L
+    - Joint2_L
+    - Joint3_L
+    - Joint4_L
+    - Joint5_L
+    - Joint6_L
+    - Joint7_L
+    right:
+    - Joint1_R
+    - Joint2_R
+    - Joint3_R
+    - Joint4_R
+    - Joint5_R
+    - Joint6_R
+    - Joint7_R
+  eef_link_names:
+    left: left_eef_link
+    right: right_eef_link
+  finger_link_names:
+    left:
+    - Arm_L10_Link
+    - Arm_L11_Link
+    right:
+    - Arm_R10_Link
+    - Arm_R11_Link
+  finger_joint_names:
+    left:
+    - Arm_L10_Joint
+    - Arm_L11_Joint
+    right:
+    - Arm_R10_Joint
+    - Arm_R11_Joint
+  # 点在手指连杆局部坐标，贴在两指内侧。Arm_R11_Joint 的原点在 y=1.793 且绕 X 翻转 180°，
+  # 所以 Arm_R11_Link 的局部 y、z 与 Arm_L11_Link 相反；换算回父连杆后两手对称。
+  assisted_grasp_start_points:
+    left:
+    - [Arm_L10_Link, [0.0, -0.14, 0.042]]
+    - [Arm_L10_Link, [0.0, -0.18, 0.042]]
+    right:
+    - [Arm_R10_Link, [0.0, -0.14, 0.042]]
+    - [Arm_R10_Link, [0.0, -0.18, 0.042]]
+  assisted_grasp_end_points:
+    left:
+    - [Arm_L11_Link, [0.0, -0.14, -0.042]]
+    - [Arm_L11_Link, [0.0, -0.18, -0.042]]
+    right:
+    - [Arm_R11_Link, [-0.0013, 1.933, 0.042]]
+    - [Arm_R11_Link, [-0.0013, 1.973, 0.042]]
+  gripper_link_names:
+    left:
+    - Arm_L9_Link
+    - Link8_L
+    right:
+    - Arm_R9_Link
+    - Link8_R
+  arm_workspace_range:
+    left:
+    - -45
+    - 45
+    right:
+    - -45
+    - 45

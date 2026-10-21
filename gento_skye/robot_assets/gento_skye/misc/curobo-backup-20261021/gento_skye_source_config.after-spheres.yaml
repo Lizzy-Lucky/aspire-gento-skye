@@ -1,0 +1,631 @@
+urdf_path: /root/gpufree-data/aspire/gento-skye-import/gento_skye.urdf
+name: gento_skye
+headless: true
+overwrite: true
+merge_fixed_joints: false
+dataset_name: omnigibson-robot-assets
+base_motion:
+  wheel_links:
+  - ZQ_Link
+  - ZQL_Link
+  - YQ_Link
+  - YQL_Link
+  - ZH_Link
+  - ZHL_Link
+  - YH_Link
+  - YHL_Link
+  wheel_joints:
+  - ZQ
+  - ZQL
+  - YQ
+  - YQL
+  - ZH
+  - ZHL
+  - YH
+  - YHL
+  use_sphere_wheels: true
+  use_holonomic_joints: true
+collision:
+  decompose_method: convex
+  hull_count: 8
+  coacd_links: []
+  convex_links: []
+  no_decompose_links: []
+  no_collision_links:
+  - IMU_Link
+  - head_depth_camera_Link
+  - left_eye_camera_Link
+  - right_eye_camera_Link
+  - waist_depth_camera_Link
+eef_vis_links:
+- link: left_eef_link
+  parent_link: TCP_Link_L
+  offset:
+    position:
+    - 0
+    - 0
+    - 0
+    orientation:
+    - 0
+    - 0
+    - 0
+    - 1
+- link: right_eef_link
+  parent_link: TCP_Link_R
+  offset:
+    position:
+    - 0
+    - 0
+    - 0
+    orientation:
+    - 0
+    - 0
+    - 0
+    - 1
+camera_links:
+# The housing mesh sits on the link's -Z side; the lens faces link +Z (robot
+# forward) with link +Y up. A USD camera looks along its own -Z, so it is turned
+# 180 deg about Y, and moved 1 cm along link +Z so it clears the housing front
+# face. Identity here renders the inside of the housing (all black).
+- link: head_depth_camera_Link
+  parent_link: null
+  offset:
+    position:
+    - 0
+    - 0
+    - 0.01
+    orientation:
+    - 0
+    - 1
+    - 0
+    - 0
+- link: left_eye_camera_Link
+  parent_link: null
+  offset:
+    position:
+    - 0
+    - 0
+    - 0
+    orientation:
+    - 0
+    - 0
+    - 0
+    - 1
+- link: right_eye_camera_Link
+  parent_link: null
+  offset:
+    position:
+    - 0
+    - 0
+    - 0
+    orientation:
+    - 0
+    - 0
+    - 0
+    - 1
+- link: waist_depth_camera_Link
+  parent_link: null
+  offset:
+    position:
+    - 0
+    - 0
+    - 0
+    orientation:
+    - 0
+    - 0
+    - 0
+    - 1
+# Wrist cameras are not in the URDF. These poses come from the Link8 mesh:
+# the flange center, 10 mm proud of the +Z face, with the camera -Z axis
+# aimed at the fingertips. Replace them when a measured mount is available.
+- link: left_wrist_camera_Link
+  parent_link: Link8_L
+  offset:
+    position:
+    - 0.0229
+    - 0.0
+    - 0.0731
+    orientation:
+    - 0.7071067811865476
+    - 0.7071067811865476
+    - 0.0
+    - 0.0
+- link: right_wrist_camera_Link
+  parent_link: Link8_R
+  offset:
+    position:
+    - 0.0229
+    - 0.0
+    - 0.0731
+    orientation:
+    - 0.7071067811865476
+    - 0.7071067811865476
+    - 0.0
+    - 0.0
+lidar_links: []
+curobo:
+  eef_to_gripper_info:
+    left_eef_link:
+      links:
+      - Arm_L10_Link
+      - Arm_L11_Link
+      joints:
+      - Arm_L10_Joint
+      - Arm_L11_Joint
+    right_eef_link:
+      links:
+      - Arm_R10_Link
+      - Arm_R11_Link
+      joints:
+      - Arm_R10_Joint
+      - Arm_R11_Joint
+  flip_joint_limits: []
+  lock_joints: {}
+  torso_joints:
+  - waist_joint_1
+  - waist_joint_2
+  - waist_joint_3
+  self_collision_ignore:
+    base_link:
+    - ZQ_Link
+    - YQ_Link
+    - ZH_Link
+    - YH_Link
+    - ZLD_Link
+    - YLD_Link
+    - C1_Link
+    - C2_Link
+    - C3_Link
+    - C4_Link
+    - C5_Link
+    - C6_Link
+    - C7_Link
+    - C8_Link
+    - IMU_Link
+    - XJ_Link
+    - waist_Link_1_prismatic
+    - waist_Link_2
+    - waist_Link_3
+    ZQ_Link:
+    - ZQL_Link
+    YQ_Link:
+    - YQL_Link
+    ZH_Link:
+    - ZHL_Link
+    YH_Link:
+    - YHL_Link
+    waist_Link_1_prismatic:
+    - waist_Link_2
+    waist_Link_2:
+    - waist_Link_3
+    waist_Link_3:
+    - Link1_R
+    - Link1_L
+    - head_Link_1
+    - waist_depth_camera_Link
+    Link1_R:
+    - Link2_R
+    Link2_R:
+    - Link3_R
+    Link3_R:
+    - Link4_R
+    Link4_R:
+    - Link5_R
+    Link5_R:
+    - Link6_R
+    Link6_R:
+    - Link7_R
+    Link7_R:
+    - TCP_Link_R
+    TCP_Link_R:
+    - Link8_R
+    Link8_R:
+    - Link_Right_wrist
+    - Arm_R9_Link
+    Arm_R9_Link:
+    - Arm_R10_Link
+    - Arm_R11_Link
+    Link1_L:
+    - Link2_L
+    Link2_L:
+    - Link3_L
+    Link3_L:
+    - Link4_L
+    Link4_L:
+    - Link5_L
+    Link5_L:
+    - Link6_L
+    Link6_L:
+    - Link7_L
+    Link7_L:
+    - TCP_Link_L
+    TCP_Link_L:
+    - Link8_L
+    Link8_L:
+    - Link_Left_wrist
+    - Arm_L9_Link
+    Arm_L9_Link:
+    - Arm_L10_Link
+    - Arm_L11_Link
+    head_Link_1:
+    - head_Link_2
+    head_Link_2:
+    - head_depth_camera_Link
+    - left_eye_camera_Link
+    - right_eye_camera_Link
+    Arm_L10_Link:
+    - Arm_L11_Link
+    Arm_R10_Link:
+    - Arm_R11_Link
+  self_collision_buffer: {}
+  collision_spheres:
+    # base_link was one r=0.735 m sphere around the whole robot, so the waist and arms were
+    # always in self collision. These follow meshes/skye/base_link.STL: six over the chassis
+    # (bottom 5 cm above the floor) and seven up the rear column. Wheel *L_Link spheres are
+    # r=0.04 so they stay clear of cuRobo's 2 cm activation distance to the floor.
+    base_link:
+    - center:
+      - -0.17
+      - -0.11
+      - 0.21
+      radius: 0.16
+    - center:
+      - -0.17
+      - 0.11
+      - 0.21
+      radius: 0.16
+    - center:
+      - 0.0
+      - -0.11
+      - 0.21
+      radius: 0.16
+    - center:
+      - 0.0
+      - 0.11
+      - 0.21
+      radius: 0.16
+    - center:
+      - 0.17
+      - -0.11
+      - 0.21
+      radius: 0.16
+    - center:
+      - 0.17
+      - 0.11
+      - 0.21
+      radius: 0.16
+    - center:
+      - -0.084
+      - 0.0
+      - 0.5
+      radius: 0.12
+    - center:
+      - -0.084
+      - 0.0
+      - 0.65
+      radius: 0.12
+    - center:
+      - -0.084
+      - 0.0
+      - 0.8
+      radius: 0.12
+    - center:
+      - -0.084
+      - 0.0
+      - 0.95
+      radius: 0.12
+    - center:
+      - -0.084
+      - 0.0
+      - 1.1
+      radius: 0.12
+    - center:
+      - -0.084
+      - 0.0
+      - 1.25
+      radius: 0.12
+    - center:
+      - -0.084
+      - 0.0
+      - 1.4
+      radius: 0.12
+    ZQ_Link:
+    - center:
+      - -0.00072
+      - -0.01838
+      - -0.07875
+      radius: 0.08025
+    ZQL_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - 0.013
+      radius: 0.04
+    YQ_Link:
+    - center:
+      - 0.00072
+      - 0.01838
+      - -0.07875
+      radius: 0.08025
+    YQL_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - 0.013
+      radius: 0.04
+    ZH_Link:
+    - center:
+      - -0.00072
+      - -0.01838
+      - -0.07875
+      radius: 0.08025
+    ZHL_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - 0.013
+      radius: 0.04
+    YH_Link:
+    - center:
+      - 0.00072
+      - 0.01838
+      - -0.07875
+      radius: 0.08025
+    YHL_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - 0.013
+      radius: 0.04
+    ZLD_Link:
+    - center:
+      - -0.01228
+      - 0.0
+      - -0.01743
+      radius: 0.04621
+    YLD_Link:
+    - center:
+      - -0.01228
+      - 0.0
+      - -0.01743
+      radius: 0.04621
+    C1_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C2_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C3_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C4_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C5_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C6_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C7_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    C8_Link:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.0152
+      radius: 0.02574
+    XJ_Link:
+    - center:
+      - -0.01747
+      - 0.0
+      - -0.00854
+      radius: 0.04447
+    waist_Link_1_prismatic:
+    - center:
+      - -0.06141
+      - -0.0
+      - -1.0e-05
+      radius: 0.13859
+    waist_Link_2:
+    - center:
+      - 0.00211
+      - 0.00986
+      - 0.0
+      radius: 0.12829
+    waist_Link_3:
+    - center:
+      - 0.01339
+      - 0.0
+      - 0.33017
+      radius: 0.23217
+    Link1_R:
+    - center:
+      - -0.0
+      - 0.0
+      - -0.03934
+      radius: 0.09516
+    Link2_R:
+    - center:
+      - 0.0
+      - 0.04533
+      - -0.0
+      radius: 0.10267
+    Link3_R:
+    - center:
+      - 0.01106
+      - 0.0
+      - -0.04658
+      radius: 0.09692
+    Link4_R:
+    - center:
+      - 0.00427
+      - -0.03529
+      - 0.0
+      radius: 0.08571
+    Link5_R:
+    - center:
+      - 0.0
+      - 0.0
+      - -0.08725
+      radius: 0.11075
+    Link6_R:
+    - center:
+      - 0.0
+      - 0.00225
+      - 0.0
+      radius: 0.045
+    Link7_R:
+    - center:
+      - 0.0
+      - -0.02832
+      - -0.00075
+      radius: 0.06668
+    TCP_Link_R:
+    - center:
+      - 0.0
+      - -0.0
+      - 0.0
+      radius: 0.01
+    Link8_R:
+    - center:
+      - 0.02287
+      - 0.0
+      - 0.03157
+      radius: 0.05887
+    Link_Right_wrist:
+    - center:
+      - -1.0e-05
+      - 0.02075
+      - 0.0
+      radius: 0.02075
+    Arm_R9_Link:
+    - center:
+      - -0.00203
+      - -0.08355
+      - 0.0
+      radius: 0.0745
+    Arm_R10_Link:
+    - center:
+      - -0.00146
+      - -0.15962
+      - 0.05553
+      radius: 0.04762
+    Arm_R11_Link:
+    - center:
+      - 0.00011
+      - 1.95262
+      - 0.05553
+      radius: 0.04762
+    Link1_L:
+    - center:
+      - -0.0
+      - 0.0
+      - -0.03934
+      radius: 0.09516
+    Link2_L:
+    - center:
+      - 0.0
+      - 0.04533
+      - -0.0
+      radius: 0.10267
+    Link3_L:
+    - center:
+      - 0.01106
+      - 0.0
+      - -0.04658
+      radius: 0.09692
+    Link4_L:
+    - center:
+      - 0.00427
+      - -0.03529
+      - 0.0
+      radius: 0.08571
+    Link5_L:
+    - center:
+      - -0.0
+      - 0.0
+      - -0.08725
+      radius: 0.11075
+    Link6_L:
+    - center:
+      - 0.0
+      - 0.00225
+      - 0.0
+      radius: 0.045
+    Link7_L:
+    - center:
+      - 0.0
+      - -0.02832
+      - -0.00075
+      radius: 0.06668
+    TCP_Link_L:
+    - center:
+      - 0.0
+      - -0.0
+      - 0.0
+      radius: 0.01
+    Link8_L:
+    - center:
+      - 0.02287
+      - 0.0
+      - 0.03157
+      radius: 0.05887
+    Link_Left_wrist:
+    - center:
+      - -0.0
+      - 0.02075
+      - -1.0e-05
+      radius: 0.02075
+    Arm_L9_Link:
+    - center:
+      - -0.00203
+      - -0.08355
+      - 0.0
+      radius: 0.0745
+    Arm_L10_Link:
+    - center:
+      - -0.00146
+      - -0.15962
+      - 0.05553
+      radius: 0.04762
+    Arm_L11_Link:
+    - center:
+      - 0.00146
+      - -0.15962
+      - -0.05553
+      radius: 0.04762
+    head_Link_1:
+    - center:
+      - 9.0e-05
+      - -0.01641
+      - -0.02375
+      radius: 0.07375
+    head_Link_2:
+    - center:
+      - 0.03437
+      - 0.04375
+      - 0.00023
+      radius: 0.09893

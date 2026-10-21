@@ -18,37 +18,22 @@ PHYSICS_FREQUENCY_HZ = 120
 HEAD_HORIZONTAL_APERTURE = 40.0
 """Wider head field of view, the value the official evaluator applies (eval/evaluator.py)."""
 
-# 28-DoF reset configuration from OmniGibson's r1pro_primitives.yaml: 6 virtual base joints,
-# 4 torso joints, 7 + 7 arm joints (interleaved left/right), 2 + 2 finger joints (open).
+# 29-DoF reset for gento_skye, in the runtime articulation order printed by
+# robot.joints: 6 virtual base joints, 3 waist, then head / left arm / right arm
+# interleaved, followed by four finger joints. Fingers start at 0 (open); 0.04 m is closed.
 RESET_JOINT_POSITIONS: tuple[float, ...] = (
-    0.0,
-    0.0,
-    0.0247,
-    0.0009,
-    0.0004,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.03,
-    0.03,
-    0.03,
-    0.03,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.5, 0.0, 0.0,
+    0.0,                    # Head_J1_Joint
+    1.57, -1.57,            # Joint1_L, Joint1_R
+    0.0,                    # Head_J2_Joint
+    -1.13, -1.13,           # Joint2_L, Joint2_R
+    -1.18, 1.18,            # Joint3_L, Joint3_R
+    -1.57, -1.57,           # Joint4_L, Joint4_R
+    -0.423, 0.423,          # Joint5_L, Joint5_R
+    -0.147, -0.147,         # Joint6_L, Joint6_R
+    0.298, -0.298,          # Joint7_L, Joint7_R
+    0.0, 0.0, 0.0, 0.0,
 )
 
 _POSITION_JOINT_CONTROLLER = {
@@ -115,6 +100,8 @@ def build_environment_config(
                 "action_normalize": False,
                 "action_type": "continuous",
                 "grasping_mode": "assisted",
+                # Gento's finger joints close as q rises from 0 to 0.04 m.
+                "grasping_direction": "upper",
                 "reset_joint_pos": list(RESET_JOINT_POSITIONS),
                 "sensor_config": {
                     "VisionSensor": {
@@ -132,6 +119,9 @@ def build_environment_config(
                         "use_impedances": False,
                     },
                     "trunk": deepcopy(_POSITION_JOINT_CONTROLLER),
+                    # The robot default is a delta camera controller. q_to_action() can
+                    # only hold a complete joint target when every group is absolute.
+                    "camera": deepcopy(_POSITION_JOINT_CONTROLLER),
                     "arm_left": deepcopy(_POSITION_JOINT_CONTROLLER),
                     "arm_right": deepcopy(_POSITION_JOINT_CONTROLLER),
                     "gripper_left": deepcopy(_POSITION_JOINT_CONTROLLER),
@@ -146,7 +136,10 @@ def build_environment_config(
             "activity_definition_id": 0,
             "activity_instance_id": 0,
             "online_object_sampling": False,
-            "use_presampled_robot_pose": True,
+            # The challenge snapshots only contain poses for officially supported robots.
+            # BehaviorAdapter loads the selected instance and applies Gento's converted pose itself.
+            # Enabling this here makes Environment.__init__ reset before the adapter can inject that pose.
+            "use_presampled_robot_pose": False,
             "termination_config": {"max_steps": int(horizon) + 1},
             "reward_config": {"r_potential": 1.0},
             "include_obs": False,

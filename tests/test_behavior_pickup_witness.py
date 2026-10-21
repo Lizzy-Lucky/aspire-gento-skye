@@ -23,6 +23,16 @@ def _env() -> FakeOmniGibsonEnv:
     return FakeOmniGibsonEnv(config)
 
 
+def test_environment_constructor_does_not_request_an_unsupported_gento_pose() -> None:
+    metadata = BehaviorTaskRegistry().resolve("turning_on_radio")
+    config = build_environment_config(metadata, camera_width=32, camera_height=32, horizon=50)
+
+    assert config["task"]["use_presampled_robot_pose"] is False
+    camera = config["robots"][0]["controller_config"]["camera"]
+    assert camera["name"] == "JointController"
+    assert camera["use_delta_commands"] is False
+
+
 def _step(witness: BehaviorPickupWitness, ok: bool = True) -> None:
     action = RobotAction(
         {"primary": ArmCommand("joint_position", np.zeros(7), embodiment="behavior")}

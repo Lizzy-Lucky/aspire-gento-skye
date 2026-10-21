@@ -38,7 +38,7 @@ class BehaviorTaskMetadata:
     support_prompt: str
     scene_model: str = DEFAULT_SCENE_MODEL
     load_room_types: tuple[str, ...] = ("living_room",)
-    robots: tuple[str, ...] = ("r1pro",)
+    robots: tuple[str, ...] = ("gento_skye",)
     camera_names: tuple[str, ...] = BEHAVIOR_CAMERA_NAMES
     instance_mode: str = "train"
     task_id: int = 0

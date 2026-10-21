@@ -195,6 +195,8 @@ torchaudio==${TORCHAUDIO_VERSION}
 torchcodec==${TORCHCODEC_VERSION}
 numpy<2
 setuptools>=71,<81
+# pyarrow 22+ refuses NumPy 1.x at import; Isaac Sim 5.1 keeps this env on NumPy 1.26.
+pyarrow>=21.0.0,<22
 EOF
   export UV_CONSTRAINT="$CONSTRAINTS"
   # 2. Pins first, so nothing below resolves a cu13 torch or numpy 2.

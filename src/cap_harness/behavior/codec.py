@@ -66,8 +66,9 @@ class R1ProJointLayout:
         for arm in arms:
             if opens[arm].shape != grippers[arm].shape or closed[arm].shape != grippers[arm].shape:
                 raise ValueError(f"gripper limits for {arm!r} must match its joint count")
-            if np.any(opens[arm] <= closed[arm]):
-                raise ValueError(f"gripper open limits for {arm!r} must exceed closed limits")
+            # Open may sit below closed: some grippers (Gento Skye) close as the joint value rises.
+            if np.any(opens[arm] == closed[arm]):
+                raise ValueError(f"gripper open and closed limits for {arm!r} must differ")
         used = np.concatenate([self.base, self.trunk, *arms.values(), *grippers.values()])
         if used.max() >= self.joint_count or np.unique(used).size != used.size:
             raise ValueError("joint groups overlap or exceed joint_count")

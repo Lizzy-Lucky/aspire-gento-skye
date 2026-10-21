@@ -63,6 +63,18 @@ def _hold(adapter: BehaviorAdapter) -> RobotAction:
     )
 
 
+def test_upper_grasping_direction_treats_the_lower_finger_limit_as_open() -> None:
+    from behavior_fakes import FakeRobot
+
+    robot = FakeRobot(ROOT_POSE, 16)
+    default = BehaviorAdapter._read_layout(robot)
+    robot._grasping_direction = "upper"
+    inverted = BehaviorAdapter._read_layout(robot)
+    for arm in default.gripper_open:
+        np.testing.assert_allclose(inverted.gripper_open[arm], default.gripper_closed[arm])
+        np.testing.assert_allclose(inverted.gripper_closed[arm], default.gripper_open[arm])
+
+
 def test_reset_publishes_three_cameras_in_odom_with_finite_depth() -> None:
     observer = RecordingObserver()
     adapter, factory = _adapter(observer=observer)
@@ -288,7 +300,7 @@ def test_intrinsics_are_retried_when_the_sensor_asserts_at_first() -> None:
     adapter, factory = _adapter()
     adapter.reset("turning_on_radio", 1)
     env = factory.envs[0]
-    sensor = env.robots[0].sensors["robot_r1:left_realsense_link:Camera:0"]
+    sensor = env.robots[0].sensors["robot_r1:left_wrist_camera_Link:Camera:0"]
     original = type(sensor).intrinsic_matrix
     calls = {"n": 0}
 

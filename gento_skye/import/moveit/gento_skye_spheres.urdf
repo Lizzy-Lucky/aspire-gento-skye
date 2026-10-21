@@ -1,0 +1,2556 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="gento_skye">
+  <link name="base_link">
+    <inertial>
+      <origin xyz="-0.05978825 0.00081351 0.4457615" rpy="0 0 0" />
+      <mass value="158.81" />
+      <inertia ixx="17.679676" ixy="0.00018338" ixz="0.4285173" iyy="18.005334" iyz="0.03608492" izz="2.479441" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="base_link_sphere_0">
+      <origin xyz="-0.14270 -0.06380 0.22900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.19900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_1">
+      <origin xyz="0.15730 0.11620 0.20900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.17770" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_2">
+      <origin xyz="-0.14270 0.09620 0.22900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.19090" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_3">
+      <origin xyz="0.17730 -0.10380 0.18900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.15900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_4">
+      <origin xyz="-0.12270 -0.00380 1.18900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14520" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_5">
+      <origin xyz="-0.20270 -0.00380 0.78900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14630" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_6">
+      <origin xyz="-0.12270 -0.00380 0.60900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14970" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_7">
+      <origin xyz="-0.10270 -0.00380 1.38900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.12010" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_8">
+      <origin xyz="-0.12270 -0.00380 0.94900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14720" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_9">
+      <origin xyz="-0.20270 -0.00380 0.50900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14590" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_10">
+      <origin xyz="-0.00270 -0.12380 0.18900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.15900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_11">
+      <origin xyz="-0.18270 -0.00380 0.98900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14350" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_12">
+      <origin xyz="-0.06270 0.09620 0.20900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.17900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_13">
+      <origin xyz="-0.10270 -0.00380 0.74900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.13680" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_14">
+      <origin xyz="-0.10270 -0.00380 0.50900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.13980" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_15">
+      <origin xyz="-0.10270 -0.00380 1.32900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.13140" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_16">
+      <origin xyz="0.19730 0.03620 0.18900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.15900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_17">
+      <origin xyz="-0.20270 -0.00380 0.66900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14560" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_18">
+      <origin xyz="-0.20270 0.13620 0.14900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.11900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_19">
+      <origin xyz="-0.18270 -0.12380 0.18900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.15900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_20">
+      <origin xyz="-0.10270 0.01620 1.06900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.13370" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_21">
+      <origin xyz="-0.24270 0.07620 0.36900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10320" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_22">
+      <origin xyz="0.13730 -0.12380 0.18900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.15900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_23">
+      <origin xyz="0.07730 0.17620 0.12900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.09900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_24">
+      <origin xyz="-0.08270 0.05620 1.42900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.09170" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_25">
+      <origin xyz="-0.20270 -0.00380 0.90900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14490" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_26">
+      <origin xyz="-0.20270 -0.10380 0.28900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14570" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_27">
+      <origin xyz="-0.08270 -0.02380 1.40900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.11200" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_28">
+      <origin xyz="-0.04270 0.07620 0.86900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.07480" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_29">
+      <origin xyz="-0.28270 -0.04380 0.08900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_30">
+      <origin xyz="-0.02270 0.09620 0.62900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05890" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_31">
+      <origin xyz="-0.02270 0.09620 1.20900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05320" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_32">
+      <origin xyz="-0.08270 0.21620 0.10900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.07740" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_33">
+      <origin xyz="-0.06270 -0.06380 1.06900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.09080" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_34">
+      <origin xyz="-0.14270 -0.00380 1.12900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14600" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_35">
+      <origin xyz="-0.04270 -0.20380 0.10900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.07900" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_36">
+      <origin xyz="-0.04270 0.09620 0.46900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05750" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_37">
+      <origin xyz="-0.00270 -0.12380 0.82900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04050" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_38">
+      <origin xyz="0.13730 -0.12380 0.20900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.16960" />
+      </geometry>
+    </collision>
+    <collision name="base_link_sphere_39">
+      <origin xyz="-0.02270 -0.10380 0.66900" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05260" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="ZQ_Link">
+    <inertial>
+      <origin xyz="-0.00066985 -0.02419 -0.061628" rpy="0 0 0" />
+      <mass value="0.64977" />
+      <inertia ixx="0.00076148" ixy="-1.7245E-08" ixz="-3.525E-07" iyy="0.00058131" iyz="-0.00023758" izz="0.00052221" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/ZQ_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ZQ" type="revolute">
+    <origin xyz="0.23072 0.21738 0.206" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="ZQ_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="ZQL_Link">
+    <inertial>
+      <origin xyz="-2.4339E-06 2.8529E-06 0.00078462" rpy="0 0 0" />
+      <mass value="1.2232" />
+      <inertia ixx="0.0020517" ixy="1.24E-08" ixz="-7.2992E-08" iyy="0.0020521" iyz="2.471E-07" izz="0.0037675" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/ZQL_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ZQL" type="revolute">
+    <origin xyz="-0.00071653 0.00061603 -0.136" rpy="1.5708 0 0" />
+    <parent link="ZQ_Link" />
+    <child link="ZQL_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="YQ_Link">
+    <inertial>
+      <origin xyz="0.00066985 0.02419 -0.061628" rpy="0 0 0" />
+      <mass value="0.64977" />
+      <inertia ixx="0.00076148" ixy="-1.7245E-08" ixz="3.525E-07" iyy="0.00058131" iyz="0.00023758" izz="0.00052221" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/YQ_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="YQ" type="revolute">
+    <origin xyz="0.22928 -0.21738 0.206" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="YQ_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="YQL_Link">
+    <inertial>
+      <origin xyz="-2.4339E-06 2.8529E-06 0.00078462" rpy="0 0 0" />
+      <mass value="1.2232" />
+      <inertia ixx="0.0020517" ixy="1.24E-08" ixz="-7.2992E-08" iyy="0.0020521" iyz="2.471E-07" izz="0.0037675" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/YQL_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="YQL" type="revolute">
+    <origin xyz="0.00071653 -0.00061603 -0.136" rpy="1.5708 0 3.1416" />
+    <parent link="YQ_Link" />
+    <child link="YQL_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="3.14" />
+  </joint>
+  <link name="ZH_Link">
+    <inertial>
+      <origin xyz="-0.00066985 -0.02419 -0.061628" rpy="0 0 0" />
+      <mass value="0.64977" />
+      <inertia ixx="0.00076148" ixy="-1.7245E-08" ixz="-3.525E-07" iyy="0.00058131" iyz="-0.00023758" izz="0.00052221" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/ZH_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ZH" type="revolute">
+    <origin xyz="-0.22928 0.21738 0.206" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="ZH_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="ZHL_Link">
+    <inertial>
+      <origin xyz="-1.6476E-06 3.3687E-06 0.00078462" rpy="0 0 0" />
+      <mass value="1.2232" />
+      <inertia ixx="0.0020518" ixy="8.8177E-08" ixz="-9.2298E-09" iyy="0.002052" iyz="2.5749E-07" izz="0.0037675" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/ZHL_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ZHL" type="revolute">
+    <origin xyz="-0.00071653 0.00061603 -0.136" rpy="1.5708 0 0" />
+    <parent link="ZH_Link" />
+    <child link="ZHL_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="YH_Link">
+    <inertial>
+      <origin xyz="0.00066985 0.02419 -0.061628" rpy="0 0 0" />
+      <mass value="0.64977" />
+      <inertia ixx="0.00076148" ixy="-1.7245E-08" ixz="3.525E-07" iyy="0.00058131" iyz="0.00023758" izz="0.00052221" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/YH_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="YH" type="revolute">
+    <origin xyz="-0.23072 -0.21738 0.206" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="YH_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="YHL_Link">
+    <inertial>
+      <origin xyz="-2.4339E-06 2.8529E-06 0.00078462" rpy="0 0 0" />
+      <mass value="1.2232" />
+      <inertia ixx="0.0020517" ixy="1.24E-08" ixz="-7.2992E-08" iyy="0.0020521" iyz="2.471E-07" izz="0.0037675" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/YHL_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="YHL" type="revolute">
+    <origin xyz="0.00071653 -0.00061603 -0.136" rpy="1.5708 0 3.1416" />
+    <parent link="YH_Link" />
+    <child link="YHL_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.967" upper="2.967" effort="50" velocity="6.28" />
+  </joint>
+  <link name="ZLD_Link">
+    <inertial>
+      <origin xyz="-0.044089 -5.1873E-10 -0.031524" rpy="0 0 0" />
+      <mass value="0.011716" />
+      <inertia ixx="3.6795E-07" ixy="5.1524E-14" ixz="-7.7265E-09" iyy="6.5201E-07" iyz="2.1499E-14" izz="5.8894E-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/ZLD_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="ZLD" type="fixed">
+    <origin xyz="0.22097 0.2007 0.36602" rpy="0.1322 -0.19146 2.6076" />
+    <parent link="base_link" />
+    <child link="ZLD_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="YLD_Link">
+    <inertial>
+      <origin xyz="-0.044089 -5.1873E-10 -0.031524" rpy="0 0 0" />
+      <mass value="0.011716" />
+      <inertia ixx="3.6795E-07" ixy="5.1524E-14" ixz="-7.7265E-09" iyy="6.5201E-07" iyz="2.1499E-14" izz="5.8894E-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/YLD_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="YLD" type="fixed">
+    <origin xyz="-0.22097 -0.2007 0.36602" rpy="0.1322 -0.19146 -0.53402" />
+    <parent link="base_link" />
+    <child link="YLD_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C1_Link">
+    <inertial>
+      <origin xyz="-2.7419E-07 3.7626E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8229E-12" ixz="-7.4382E-12" iyy="4.3593E-06" iyz="1.0192E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C1_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C1" type="fixed">
+    <origin xyz="-0.17391 -0.2725 0.22896" rpy="1.5708 0 0" />
+    <parent link="base_link" />
+    <child link="C1_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C2_Link">
+    <inertial>
+      <origin xyz="-2.7419E-07 3.7626E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8229E-12" ixz="-7.4382E-12" iyy="4.3593E-06" iyz="1.0192E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C2_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C2" type="fixed">
+    <origin xyz="0.17397 -0.2725 0.22859" rpy="1.5708 0 0" />
+    <parent link="base_link" />
+    <child link="C2_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C3_Link">
+    <inertial>
+      <origin xyz="-2.7337E-07 3.7644E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8661E-12" ixz="-7.4542E-12" iyy="4.3593E-06" iyz="1.0196E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C3_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C3" type="fixed">
+    <origin xyz="0.32715 -0.18131 0.20259" rpy="1.5708 0 1.2399" />
+    <parent link="base_link" />
+    <child link="C3_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C4_Link">
+    <inertial>
+      <origin xyz="-2.7336E-07 3.7644E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8668E-12" ixz="-7.452E-12" iyy="4.3593E-06" iyz="1.0196E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C4_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C4" type="fixed">
+    <origin xyz="0.32715 0.18131 0.20259" rpy="1.5708 0 1.9017" />
+    <parent link="base_link" />
+    <child link="C4_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C5_Link">
+    <inertial>
+      <origin xyz="-2.7419E-07 3.7626E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8229E-12" ixz="-7.4382E-12" iyy="4.3593E-06" iyz="1.0192E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C5_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C5" type="fixed">
+    <origin xyz="0.17406 0.27223 0.22859" rpy="1.5708 0 3.1416" />
+    <parent link="base_link" />
+    <child link="C5_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C6_Link">
+    <inertial>
+      <origin xyz="-2.7419E-07 3.7626E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8229E-12" ixz="-7.4382E-12" iyy="4.3593E-06" iyz="1.0192E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C6_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C6" type="fixed">
+    <origin xyz="-0.17371 0.2725 0.22896" rpy="1.5708 0 -3.1416" />
+    <parent link="base_link" />
+    <child link="C6_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C7_Link">
+    <inertial>
+      <origin xyz="-2.7359E-07 3.7639E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8544E-12" ixz="-7.4493E-12" iyy="4.3593E-06" iyz="1.0196E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C7_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C7" type="fixed">
+    <origin xyz="-0.32119 0.16647 0.2139" rpy="1.5708 0 -1.709556" />
+    <parent link="base_link" />
+    <child link="C7_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="C8_Link">
+    <inertial>
+      <origin xyz="-2.7356E-07 3.7639E-06 -0.012402" rpy="0 0 0" />
+      <mass value="0.019788" />
+      <inertia ixx="1.8765E-06" ixy="2.8561E-12" ixz="-7.4465E-12" iyy="4.3593E-06" iyz="1.0195E-10" izz="4.9605E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/C8_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="C8" type="fixed">
+    <origin xyz="-0.32119 -0.16647 0.2139" rpy="1.5708 0 -1.4304" />
+    <parent link="base_link" />
+    <child link="C8_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="IMU_Link">
+    <inertial>
+      <origin xyz="-0.0021919 0.0026054 -0.0067841" rpy="0 0 0" />
+      <mass value="0.0072701" />
+      <inertia ixx="7.4527E-07" ixy="-6.1438E-09" ixz="9.4122E-11" iyy="2.2977E-07" iyz="7.65E-10" izz="9.4254E-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/IMU_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="IMU" type="fixed">
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="IMU_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="XJ_Link">
+    <inertial>
+      <origin xyz="3.4694E-18 0 0.00073871" rpy="0 0 0" />
+      <mass value="0.00017226" />
+      <inertia ixx="5.5043E-10" ixy="3.9032E-42" ixz="-1.3728E-29" iyy="5.5043E-10" iyz="-1.2457E-42" izz="9.8412E-10" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/XJ_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="XJ" type="fixed">
+    <origin xyz="0.34185 0.0175 0.199" rpy="1.5708 0 1.5708" />
+    <parent link="base_link" />
+    <child link="XJ_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="waist_Link_1_prismatic">
+    <inertial>
+      <origin xyz="-0.043051 -0.00099026 -0.0031441" rpy="0 0 0" />
+      <mass value="6.0547" />
+      <inertia ixx="0.013887" ixy="0.00025825" ixz="-0.0014717" iyy="0.041848" iyz="1.8808E-05" izz="0.03664" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/waist_Link_1_prismatic.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="waist_Link_1_prismatic_sphere_0">
+      <origin xyz="0.01000 -0.00300 -0.00750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06500" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_1">
+      <origin xyz="-0.15000 -0.00300 -0.00750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06320" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_2">
+      <origin xyz="-0.07000 -0.00300 -0.00750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06500" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_3">
+      <origin xyz="-0.01000 -0.00300 0.03250" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05910" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_4">
+      <origin xyz="-0.09000 -0.00300 0.01250" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06470" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_5">
+      <origin xyz="-0.15000 -0.00300 -0.02750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06180" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_6">
+      <origin xyz="-0.05000 -0.00300 -0.02750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06390" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_7">
+      <origin xyz="0.03000 -0.00300 0.01250" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05950" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_8">
+      <origin xyz="-0.15000 -0.00300 0.01250" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06330" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_9">
+      <origin xyz="0.01000 -0.00300 -0.02750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06290" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_10">
+      <origin xyz="-0.19000 0.01700 -0.06750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02090" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_11">
+      <origin xyz="-0.13000 -0.00300 -0.02750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06230" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_1_prismatic_sphere_12">
+      <origin xyz="-0.01350 0.03800 0.05730" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03000" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="waist_joint_1" type="prismatic">
+    <origin xyz="0.18048 0 0.36213" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="waist_Link_1_prismatic" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.86" effort="50" velocity="0.2" />
+  </joint>
+  <link name="waist_Link_2">
+    <inertial>
+      <origin xyz="0.0026414 0.02235 -0.0012175" rpy="0 0 0" />
+      <mass value="5.3538" />
+      <inertia ixx="0.04609582" ixy="0.00043467" ixz="1.785E-05" iyy="0.04430159" iyz="0.00014534" izz="0.02076499" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/waist_Link_2.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="waist_Link_2_sphere_0">
+      <origin xyz="0.00330 0.00970 -0.03830" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.09640" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_2_sphere_1">
+      <origin xyz="0.00330 0.00970 0.04170" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.09640" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_2_sphere_2">
+      <origin xyz="-0.03670 0.04970 0.00170" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06480" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_2_sphere_3">
+      <origin xyz="0.04330 0.04970 0.00170" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06060" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_2_sphere_4">
+      <origin xyz="0.00330 0.02970 -0.05830" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.08390" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_2_sphere_5">
+      <origin xyz="0.00330 0.02970 0.04170" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.08530" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_2_sphere_6">
+      <origin xyz="-0.01670 0.02970 -0.05830" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.07990" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="waist_joint_2" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="waist_Link_1_prismatic" />
+    <child link="waist_Link_2" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="0" effort="194" velocity="3.14" />
+  </joint>
+  <link name="waist_Link_3">
+    <inertial>
+      <origin xyz="0.0041391 9.144E-05 0.34664435" rpy="0 0 0" />
+      <mass value="17.4767" />
+      <inertia ixx="0.36345315" ixy="-0.00022069" ixz="0.00340584" iyy="0.33755628" iyz="-0.00018698" izz="0.16205022" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/waist_Link_3.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="waist_Link_3_sphere_0">
+      <origin xyz="0.00050 0.00980 0.22800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.13460" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_1">
+      <origin xyz="0.02050 0.00980 0.42800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14420" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_2">
+      <origin xyz="0.00050 -0.01020 0.32800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14230" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_3">
+      <origin xyz="0.02050 -0.01020 0.42800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14420" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_4">
+      <origin xyz="0.00050 -0.01020 0.20800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.12510" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_5">
+      <origin xyz="0.00050 0.00980 0.32800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14260" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_6">
+      <origin xyz="-0.03950 0.04980 0.42800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10060" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_7">
+      <origin xyz="-0.03950 -0.05020 0.42800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10070" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_8">
+      <origin xyz="0.08050 -0.07020 0.42800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.08410" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_9">
+      <origin xyz="0.06050 0.04980 0.42800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10470" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_10">
+      <origin xyz="0.00050 0.02980 0.44800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.12550" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_11">
+      <origin xyz="0.04050 -0.05020 0.32800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10220" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_12">
+      <origin xyz="0.02050 -0.05020 0.46800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10410" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_13">
+      <origin xyz="0.02050 0.00980 0.36800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.14390" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_14">
+      <origin xyz="-0.03950 -0.05020 0.32800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10210" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_15">
+      <origin xyz="0.00050 0.00980 0.18800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10520" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_16">
+      <origin xyz="0.06050 0.04980 0.44800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.10070" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_17">
+      <origin xyz="-0.05950 -0.13020 0.48800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02530" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_18">
+      <origin xyz="0.06050 -0.11020 0.48800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04450" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_19">
+      <origin xyz="-0.09950 0.08980 0.34800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03950" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_20">
+      <origin xyz="-0.09950 0.12980 0.46800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02270" />
+      </geometry>
+    </collision>
+    <collision name="waist_Link_3_sphere_21">
+      <origin xyz="-0.11950 -0.07020 0.22800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01820" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="waist_joint_3" type="revolute">
+    <origin xyz="0 0 0" rpy="-1.5708 0 0" />
+    <parent link="waist_Link_2" />
+    <child link="waist_Link_3" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.4363" upper="0.4363" effort="194" velocity="3.14" />
+  </joint>
+  <link name="Link1_R">
+    <inertial>
+      <origin xyz="0.00011223 0.00593728  -0.04061573" rpy="0 0 0" />
+      <mass value="2.14768327" />
+      <inertia ixx="0.00631026" ixy="0.00000785" ixz="0.00000275" iyy="0.00666529" iyz="0.00051846" izz="0.00232406" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link1_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="Link1_R_sphere_0">
+      <origin xyz="-0.00580 -0.00100 -0.08450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05810" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_1">
+      <origin xyz="-0.00580 -0.00100 0.01550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04980" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_2">
+      <origin xyz="0.01420 -0.00100 -0.00450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05220" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_3">
+      <origin xyz="-0.00580 -0.00100 -0.02450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05500" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_4">
+      <origin xyz="0.01420 -0.00100 -0.10450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_5">
+      <origin xyz="-0.00580 0.01900 -0.10450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04540" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_6">
+      <origin xyz="-0.00580 -0.04100 -0.12450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02490" />
+      </geometry>
+    </collision>
+    <collision name="Link1_R_sphere_7">
+      <origin xyz="-0.00580 -0.00100 -0.06450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05910" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint1_R" type="revolute">
+    <origin xyz="0 -0.2305 0.4335" rpy="1.5708 0 0" />
+    <parent link="waist_Link_3" />
+    <child link="Link1_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1067" upper="3.1067" effort="108" velocity="3.1416" />
+  </joint>
+  <link name="Link2_R">
+    <inertial>
+      <origin xyz="0.00013483 0.06170460 0.00950639" rpy="0 0 0" />
+      <mass value="2.24398" />
+      <inertia ixx="0.01194933" ixy="0.00000336" ixz="0.00000091" iyy="0.00361581" iyz="-0.00132804" izz="0.01098356" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link2_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="Link2_R_sphere_0">
+      <origin xyz="-0.00770 0.01270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06440" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_1">
+      <origin xyz="-0.00770 0.09270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05800" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_2">
+      <origin xyz="0.01230 -0.00730 -0.01450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05810" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_3">
+      <origin xyz="0.01230 -0.00730 0.02550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05390" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_4">
+      <origin xyz="0.01230 0.11270 -0.01450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04800" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_5">
+      <origin xyz="-0.00770 0.01270 -0.01450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06430" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_6">
+      <origin xyz="0.01230 0.05270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05690" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_7">
+      <origin xyz="-0.00770 0.11270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05050" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_8">
+      <origin xyz="-0.04770 -0.02730 0.04550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01810" />
+      </geometry>
+    </collision>
+    <collision name="Link2_R_sphere_9">
+      <origin xyz="0.01230 0.11270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05040" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint2_R" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="Link1_R" />
+    <child link="Link2_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.0944" upper="2.0944" effort="108" velocity="3.1416" />
+  </joint>
+  <link name="Link3_R">
+    <inertial>
+      <origin xyz="0.00968562 0.00246599 -0.04627302" rpy="0 0 0" />
+      <mass value="1.9242" />
+      <inertia ixx="0.00718224" ixy="0.00004413" ixz="0.00089552" iyy="0.00762563" iyz="0.00022096" izz="0.00178597" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link3_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Link3_R_sphere_0">
+      <origin xyz="0.00380 0.00370 -0.05350" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05150" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_1">
+      <origin xyz="0.01710 0.00400 0.00630" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_2">
+      <origin xyz="-0.00480 -0.00130 -0.12000" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03860" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_3">
+      <origin xyz="0.01560 0.00340 -0.11700" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04150" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_4">
+      <origin xyz="0.02630 -0.00470 -0.00450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_5">
+      <origin xyz="-0.01220 -0.01030 -0.11630" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04130" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_6">
+      <origin xyz="0.00380 0.00370 0.00650" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04520" />
+      </geometry>
+    </collision>
+    <collision name="Link3_R_sphere_7">
+      <origin xyz="-0.01620 0.02370 -0.11350" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03210" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint3_R" type="revolute">
+    <origin xyz="0 0.287 0" rpy="-1.5708 0 0" />
+    <parent link="Link2_R" />
+    <child link="Link3_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1067" upper="3.1067" effort="66" velocity="3.1416" />
+  </joint>
+  <link name="Link4_R">
+    <inertial>
+      <origin xyz="0.00850411 -0.04718223 0.00941509" rpy="0 0 0" />
+      <mass value="1.6085" />
+      <inertia ixx="0.00580480" ixy="-0.00066669" ixz="-0.00012722" iyy="0.00223807" iyz="0.00070523" izz="0.00533060" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link4_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="Link4_R_sphere_0">
+      <origin xyz="-0.00050 -0.01100 -0.00800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06260" />
+      </geometry>
+    </collision>
+    <collision name="Link4_R_sphere_1">
+      <origin xyz="0.01780 -0.09100 0.00170" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link4_R_sphere_2">
+      <origin xyz="-0.00050 -0.01100 0.01200" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06070" />
+      </geometry>
+    </collision>
+    <collision name="Link4_R_sphere_3">
+      <origin xyz="-0.00050 -0.05100 -0.00800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05340" />
+      </geometry>
+    </collision>
+    <collision name="Link4_R_sphere_4">
+      <origin xyz="-0.00050 -0.05100 0.01200" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05330" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint4_R" type="revolute">
+    <origin xyz="0.018 0 0" rpy="-1.5708 0 3.1416" />
+    <parent link="Link3_R" />
+    <child link="Link4_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.5307" upper="1.0472" effort="66" velocity="3.1416" />
+  </joint>
+  <link name="Link5_R">
+    <inertial>
+      <origin xyz="-0.00051127 -0.00101064 -0.11271739" rpy="0 0 0" />
+      <mass value="2.0883" />
+      <inertia ixx="0.00626603" ixy="0.00004009" ixz="-0.00005338" iyy="0.00564387" iyz="0.00006193" izz="0.00243632" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link5_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="Link5_R_sphere_0">
+      <origin xyz="0.00600 -0.00850 -0.14800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05150" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_1">
+      <origin xyz="0.00020 -0.01230 -0.02020" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_2">
+      <origin xyz="0.00600 0.01150 -0.08800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05280" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_3">
+      <origin xyz="-0.00060 0.02800 -0.02150" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_4">
+      <origin xyz="-0.00020 -0.02610 -0.08590" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_5">
+      <origin xyz="-0.00940 0.01460 -0.16290" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04490" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_6">
+      <origin xyz="0.00600 -0.04850 -0.00800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02460" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_7">
+      <origin xyz="0.00600 0.01150 -0.14800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05140" />
+      </geometry>
+    </collision>
+    <collision name="Link5_R_sphere_8">
+      <origin xyz="-0.03400 -0.00850 -0.18800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02170" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint5_R" type="revolute">
+    <origin xyz="0.018 -0.314 0" rpy="-1.5708 0 3.1416" />
+    <parent link="Link4_R" />
+    <child link="Link5_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1067" upper="3.1067" effort="18" velocity="3.1416" />
+  </joint>
+  <link name="Link6_R">
+    <inertial>
+      <origin xyz="0.00032659 -0.00531336 0.00030182" rpy="0 0 0" />
+      <mass value="0.72496" />
+      <inertia ixx="0.00046040" ixy="-0.00000189" ixz="-0.00000083" iyy="0.00051716" iyz="-0.00000346" izz="0.00042521" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link6_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Link6_R_sphere_0">
+      <origin xyz="0.00040 -0.00050 0.00030" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint6_R" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 -1.5708 0" />
+    <parent link="Link5_R" />
+    <child link="Link6_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.0472" upper="1.0472" effort="18" velocity="3.1416" />
+  </joint>
+  <link name="Link7_R">
+    <inertial>
+      <origin xyz="-0.00009108 -0.03153255 0.00889371" rpy="0 0 0" />
+      <mass value="0.68606" />
+      <inertia ixx="0.00173687" ixy="-0.00000345" ixz="-0.00000116" iyy="0.00089035" iyz="0.00030680" izz="0.00139406" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link7_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="Link7_R_sphere_0">
+      <origin xyz="-0.00010 -0.06500 0.00210" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link7_R_sphere_1">
+      <origin xyz="-0.00350 0.00690 0.00930" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link7_R_sphere_2">
+      <origin xyz="0.00760 -0.01170 -0.01990" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link7_R_sphere_3">
+      <origin xyz="0.00900 -0.02500 0.01600" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04520" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint7_R" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 -1.5708 0" />
+    <parent link="Link6_R" />
+    <child link="Link7_R" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="18" velocity="3.1416" />
+  </joint>
+  <link name="TCP_Link_R">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/TCP_Link_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision name="TCP_Link_R_sphere_0">
+      <origin xyz="0.00000 -0.00000 0.00000" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01000" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="JointTCP_R" type="fixed">
+    <origin xyz="0 -0.095 0" rpy="1.5708 -1.5708 0" />
+    <parent link="Link7_R" />
+    <child link="TCP_Link_R" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="Link8_R">
+    <inertial>
+      <origin xyz="0.114173673705173 1.14500734671452E-07 0.0234553428952367" rpy="0 0 0" />
+      <mass value="0.0880205156348504" />
+      <inertia ixx="0.000108662771638114" ixy="-6.3925533063502E-10" ixz="-3.88093499443002E-05" iyy="0.000118230682353423" iyz="-2.130052703709E-10" izz="4.40320418563213E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Link8_R.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision name="Link8_R_sphere_0">
+      <origin xyz="0.03620 -0.00230 0.02760" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03680" />
+      </geometry>
+    </collision>
+    <collision name="Link8_R_sphere_1">
+      <origin xyz="0.00050 -0.00040 0.01500" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03000" />
+      </geometry>
+    </collision>
+    <collision name="Link8_R_sphere_2">
+      <origin xyz="0.05080 0.00350 0.03950" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03070" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint8_R" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="TCP_Link_R" />
+    <child link="Link8_R" />
+    <axis xyz="0 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="Link_Right_wrist">
+    <inertial>
+      <origin xyz="0.0717359763450741 0.0442631391055814 -0.0224446909407665" rpy="0 0 0" />
+      <mass value="5.38320568530609" />
+      <inertia ixx="0.0152058025502204" ixy="-0.00178829198094161" ixz="-0.00146034276793319" iyy="0.0216384979545458" iyz="-0.00271933560557955" izz="0.0203994220827433" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Link_Right_wrist.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision name="Link_Right_wrist_sphere_0">
+      <origin xyz="-0.00940 0.02190 -0.00310" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01810" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_Right_wrist" type="fixed">
+    <origin xyz="0.06 0 0.057822" rpy="-1.5707  -0.00012967 1.3615" />
+    <parent link="Link8_R" />
+    <child link="Link_Right_wrist" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="Arm_R9_Link">
+    <inertial>
+      <origin xyz="0 0 0 " rpy="0 0 0" />
+      <mass value="0.21436" />
+      <inertia ixx="0.00017299" ixy="4.2904E-07" ixz="4.2578E-07" iyy="0.00021771" iyz="1.5375E-09" izz="9.8853E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Arm_R9_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="Arm_R9_Link_sphere_0">
+      <origin xyz="0.00140 -0.08570 -0.00040" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04450" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R9_Link_sphere_1">
+      <origin xyz="-0.00400 -0.11100 0.05480" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01900" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R9_Link_sphere_2">
+      <origin xyz="0.00170 -0.11180 -0.05240" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01900" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R9_Link_sphere_3">
+      <origin xyz="-0.03460 -0.05520 0.01040" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02040" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Arm_R9_Joint" type="fixed">
+    <origin xyz="0 0 -0.038" rpy="-1.5708 0 -3.1416" />
+    <parent link="Link8_R" />
+    <child link="Arm_R9_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="Arm_R10_Link">
+    <inertial>
+      <origin xyz="-0.00090072 -0.14322 0.057244" rpy="0 0 0" />
+      <mass value="0.027748" />
+      <inertia ixx="9.6216E-06" ixy="-9.9808E-08" ixz="1.7315E-08" iyy="3.5256E-06" iyz="-1.3005E-06" izz="1.0224E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Arm_R10_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Arm_R10_Link_sphere_0">
+      <origin xyz="0.00250 -0.14470 0.05720" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02500" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R10_Link_sphere_1">
+      <origin xyz="-0.00750 -0.18870 0.05180" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01600" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R10_Link_sphere_2">
+      <origin xyz="-0.01490 -0.12210 0.05920" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01880" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Arm_R10_Joint" type="prismatic">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="Arm_R9_Link" />
+    <child link="Arm_R10_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0.04" effort="30" velocity="0.05" />
+  </joint>
+  <link name="Arm_R11_Link">
+    <inertial>
+      <origin xyz="-0.00044761 1.9362 0.057244" rpy="0 0 0" />
+      <mass value="0.027748" />
+      <inertia ixx="9.6216E-06" ixy="-9.9808E-08" ixz="-1.7315E-08" iyy="3.5256E-06" iyz="1.3005E-06" izz="1.0224E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Arm_R11_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Arm_R11_Link_sphere_0">
+      <origin xyz="-0.00380 1.93720 0.05730" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02500" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R11_Link_sphere_1">
+      <origin xyz="-0.00590 1.97540 0.04440" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01650" />
+      </geometry>
+    </collision>
+    <collision name="Arm_R11_Link_sphere_2">
+      <origin xyz="-0.00590 1.90870 0.05180" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01880" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Arm_R11_Joint" type="prismatic">
+    <origin xyz="0.0013483 1.793 0" rpy="-3.1416 0 0" />
+    <parent link="Arm_R9_Link" />
+    <child link="Arm_R11_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0.04" effort="30" velocity="0.05" />
+    <mimic joint="Arm_R10_Joint" multiplier="1" offset="0" />
+  </joint>
+  <link name="Link1_L">
+    <inertial>
+      <origin xyz="0.00011223 0.00593728  -0.04061573" rpy="0 0 0" />
+      <mass value="2.14768327" />
+      <inertia ixx="0.00631026" ixy="0.00000785" ixz="0.00000275" iyy="0.00666529" iyz="0.00051846" izz="0.00232406" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link1_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="Link1_L_sphere_0">
+      <origin xyz="-0.00580 -0.00100 -0.08450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05810" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_1">
+      <origin xyz="-0.00580 -0.00100 -0.00450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05250" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_2">
+      <origin xyz="0.01420 -0.00100 -0.00450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05210" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_3">
+      <origin xyz="0.01610 0.01240 -0.10450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_4">
+      <origin xyz="-0.00580 -0.00100 0.01550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05000" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_5">
+      <origin xyz="-0.00580 -0.02100 -0.10450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04390" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_6">
+      <origin xyz="-0.00580 -0.00100 -0.06450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05910" />
+      </geometry>
+    </collision>
+    <collision name="Link1_L_sphere_7">
+      <origin xyz="-0.02580 0.01900 -0.12450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02510" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint1_L" type="revolute">
+    <origin xyz="0 0.2305 0.4425" rpy="-1.5708 0 0" />
+    <parent link="waist_Link_3" />
+    <child link="Link1_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1067" upper="3.1067" effort="108" velocity="3.1416" />
+  </joint>
+  <link name="Link2_L">
+    <inertial>
+      <origin xyz="0.00013483 0.06170460 0.00950639" rpy="0 0 0" />
+      <mass value="2.24398" />
+      <inertia ixx="0.01194933" ixy="0.00000336" ixz="0.00000091" iyy="0.00361581" iyz="-0.00132804" izz="0.01098356" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link2_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="Link2_L_sphere_0">
+      <origin xyz="-0.00770 0.01270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06440" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_1">
+      <origin xyz="-0.00770 0.09270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05800" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_2">
+      <origin xyz="0.01230 -0.00730 -0.01450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05810" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_3">
+      <origin xyz="0.01230 -0.00730 0.02550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05390" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_4">
+      <origin xyz="0.01230 0.11270 -0.01450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04800" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_5">
+      <origin xyz="-0.00770 0.01270 -0.01450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06430" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_6">
+      <origin xyz="0.01230 0.05270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05690" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_7">
+      <origin xyz="-0.00770 0.11270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05050" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_8">
+      <origin xyz="-0.04770 -0.02730 0.04550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01810" />
+      </geometry>
+    </collision>
+    <collision name="Link2_L_sphere_9">
+      <origin xyz="0.01230 0.11270 0.00550" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05040" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint2_L" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="Link1_L" />
+    <child link="Link2_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.0944" upper="2.0944" effort="108" velocity="3.1416" />
+  </joint>
+  <link name="Link3_L">
+    <inertial>
+      <origin xyz="0.00968562 0.00246599 -0.04627302" rpy="0 0 0" />
+      <mass value="1.9242" />
+      <inertia ixx="0.00718224" ixy="0.00004413" ixz="0.00089552" iyy="0.00762563" iyz="0.00022096" izz="0.00178597" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link3_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Link3_L_sphere_0">
+      <origin xyz="0.00380 0.00370 -0.05350" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05150" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_1">
+      <origin xyz="0.01710 0.00400 0.00630" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_2">
+      <origin xyz="-0.00480 -0.00130 -0.12000" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03860" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_3">
+      <origin xyz="0.01560 0.00340 -0.11700" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04150" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_4">
+      <origin xyz="0.02630 -0.00470 -0.00450" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_5">
+      <origin xyz="-0.01220 -0.01030 -0.11630" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04130" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_6">
+      <origin xyz="0.00380 0.00370 0.00650" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04520" />
+      </geometry>
+    </collision>
+    <collision name="Link3_L_sphere_7">
+      <origin xyz="-0.01620 0.02370 -0.11350" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03210" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint3_L" type="revolute">
+    <origin xyz="0 0.287 0" rpy="-1.5708 0 0" />
+    <parent link="Link2_L" />
+    <child link="Link3_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1067" upper="3.1067" effort="66" velocity="3.1416" />
+  </joint>
+  <link name="Link4_L">
+    <inertial>
+      <origin xyz="0.00850411 -0.04718223 0.00941509" rpy="0 0 0" />
+      <mass value="1.6085" />
+      <inertia ixx="0.00580480" ixy="-0.00066669" ixz="-0.00012722" iyy="0.00223807" iyz="0.00070523" izz="0.00533060" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link4_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="Link4_L_sphere_0">
+      <origin xyz="-0.00050 -0.01100 -0.00800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06260" />
+      </geometry>
+    </collision>
+    <collision name="Link4_L_sphere_1">
+      <origin xyz="0.01980 -0.09100 0.00200" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link4_L_sphere_2">
+      <origin xyz="-0.00050 -0.01100 0.01200" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06070" />
+      </geometry>
+    </collision>
+    <collision name="Link4_L_sphere_3">
+      <origin xyz="-0.00050 -0.05100 -0.00800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05330" />
+      </geometry>
+    </collision>
+    <collision name="Link4_L_sphere_4">
+      <origin xyz="-0.00050 -0.05100 0.01200" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05320" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint4_L" type="revolute">
+    <origin xyz="0.018 0 0" rpy="-1.5708 0 3.1416" />
+    <parent link="Link3_L" />
+    <child link="Link4_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-2.5307" upper="1.0472" effort="66" velocity="3.1416" />
+  </joint>
+  <link name="Link5_L">
+    <inertial>
+      <origin xyz="0.00051127 0.00101064 -0.11271739" rpy="0 0 0" />
+      <mass value="2.0883" />
+      <inertia ixx="0.00626603" ixy="0.00004009" ixz="0.00005338" iyy="0.00564387" iyz="-0.00006193" izz="0.00243632" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link5_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="Link5_L_sphere_0">
+      <origin xyz="0.00600 -0.00850 -0.14800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05150" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_1">
+      <origin xyz="0.00060 0.01670 -0.02200" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_2">
+      <origin xyz="0.00600 -0.00850 -0.08800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05290" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_3">
+      <origin xyz="0.00160 -0.02580 -0.02520" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_4">
+      <origin xyz="-0.00600 0.02560 -0.09690" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_5">
+      <origin xyz="-0.00000 0.00890 -0.16800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_6">
+      <origin xyz="-0.00060 0.02780 -0.02540" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_7">
+      <origin xyz="0.00600 0.01150 -0.08800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05280" />
+      </geometry>
+    </collision>
+    <collision name="Link5_L_sphere_8">
+      <origin xyz="-0.03400 -0.02850 -0.12800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02220" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint5_L" type="revolute">
+    <origin xyz="0.018 -0.314 0" rpy="-1.5708 0 3.1416" />
+    <parent link="Link4_L" />
+    <child link="Link5_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1067" upper="3.1067" effort="18" velocity="3.1416" />
+  </joint>
+  <link name="Link6_L">
+    <inertial>
+      <origin xyz="0.00032659 0.00531336 -0.00030182" rpy="0 0 0" />
+      <mass value="0.72496" />
+      <inertia ixx="0.00046040" ixy="0.00000189" ixz="0.00000083" iyy="0.00051716" iyz="-0.00000346" izz="0.00042521" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link6_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Link6_L_sphere_0">
+      <origin xyz="0.00040 -0.00050 0.00030" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint6_L" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 -1.5708 0" />
+    <parent link="Link5_L" />
+    <child link="Link6_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.0472" upper="1.0472" effort="18" velocity="3.1416" />
+  </joint>
+  <link name="Link7_L">
+    <inertial>
+      <origin xyz="-0.00009108 -0.03153255 0.00889371" rpy="0 0 0" />
+      <mass value="0.68606" />
+      <inertia ixx="0.00173687" ixy="-0.00000345" ixz="-0.00000116" iyy="0.00089035" iyz="0.00030680" izz="0.00139406" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/Link7_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="Link7_L_sphere_0">
+      <origin xyz="0.00250 -0.06500 0.00230" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link7_L_sphere_1">
+      <origin xyz="-0.00660 0.00400 0.01320" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link7_L_sphere_2">
+      <origin xyz="-0.00480 -0.00770 -0.02390" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="Link7_L_sphere_3">
+      <origin xyz="0.00900 -0.02500 0.01600" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04520" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint7_L" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 -1.5708 0" />
+    <parent link="Link6_L" />
+    <child link="Link7_L" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="18" velocity="3.1416" />
+  </joint>
+  <link name="TCP_Link_L">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/TCP_Link_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision name="TCP_Link_L_sphere_0">
+      <origin xyz="0.00000 -0.00000 0.00000" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01000" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="JointTCP_L" type="fixed">
+    <origin xyz="0 -0.095 0" rpy="1.5708 -1.5708 0" />
+    <parent link="Link7_L" />
+    <child link="TCP_Link_L" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="Link8_L">
+    <inertial>
+      <origin xyz="1.1276190270415E-07 -0.11417365347384 0.0234553552836059" rpy="0 0 0" />
+      <mass value="0.088020543548932" />
+      <inertia ixx="0.000118230671508944" ixy="6.60824120380282E-10" ixz="-2.10338428639125E-10" iyy="0.00010866282572157" iyz="3.88093041447579E-05" izz="4.4031984148421E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Link8_L.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision name="Link8_L_sphere_0">
+      <origin xyz="0.03620 -0.00230 0.02760" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03680" />
+      </geometry>
+    </collision>
+    <collision name="Link8_L_sphere_1">
+      <origin xyz="0.00050 -0.00040 0.01500" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03000" />
+      </geometry>
+    </collision>
+    <collision name="Link8_L_sphere_2">
+      <origin xyz="0.05080 0.00350 0.03950" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.03070" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint8_L" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="TCP_Link_L" />
+    <child link="Link8_L" />
+    <axis xyz="0 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="Link_Left_wrist">
+    <inertial>
+      <origin xyz="0.022446638135212 0.0442631448823432 0.0717353604419828" rpy="0 0 0" />
+      <mass value="5.38320837672175" />
+      <inertia ixx="0.0203995050043586" ixy="0.00271928690211307" ixz="0.00146020444332052" iyy="0.0216385038249464" iyz="-0.00178836359279817" izz="0.0152057269287356" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Link_Left_wrist.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision name="Link_Left_wrist_sphere_0">
+      <origin xyz="-0.00940 0.02190 -0.00310" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01810" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint_Left_wrist" type="fixed">
+    <origin xyz="0.06 0 0.057822" rpy="-1.5707  -0.00012967 1.3615" />
+    <parent link="Link8_L" />
+    <child link="Link_Left_wrist" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="Arm_L9_Link">
+    <inertial>
+      <origin xyz="-0.0015934 -0.085718 1.7355E-06" rpy="0 0 0" />
+      <mass value="0.21436" />
+      <inertia ixx="0.00017299" ixy="4.2902E-07" ixz="4.2581E-07" iyy="0.00021771" iyz="1.6026E-09" izz="9.8853E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Arm_L9_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="Arm_L9_Link_sphere_0">
+      <origin xyz="0.00140 -0.08570 -0.00040" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04450" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L9_Link_sphere_1">
+      <origin xyz="-0.00400 -0.11100 0.05480" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01900" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L9_Link_sphere_2">
+      <origin xyz="0.00170 -0.11180 -0.05240" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01900" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L9_Link_sphere_3">
+      <origin xyz="-0.03460 -0.05520 0.01040" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02040" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Arm_L9_Joint" type="fixed">
+    <origin xyz="0 0 -0.038" rpy="-1.5708 0 3.1416" />
+    <parent link="Link8_L" />
+    <child link="Arm_L9_Link" />
+    <axis xyz="0 0 0" />
+    <limit lower="0" upper="0" effort="0" velocity="0" />
+  </joint>
+  <link name="Arm_L10_Link">
+    <inertial>
+      <origin xyz="-0.00090072 -0.14322 0.057244" rpy="0 0 0" />
+      <mass value="0.027748" />
+      <inertia ixx="9.6216E-06" ixy="-9.9808E-08" ixz="1.7315E-08" iyy="3.5256E-06" iyz="-1.3005E-06" izz="1.0224E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Arm_L10_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Arm_L10_Link_sphere_0">
+      <origin xyz="0.00250 -0.14470 0.05720" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02500" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L10_Link_sphere_1">
+      <origin xyz="-0.00750 -0.18870 0.05180" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01600" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L10_Link_sphere_2">
+      <origin xyz="-0.01490 -0.12210 0.05920" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01880" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Arm_L10_Joint" type="prismatic">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="Arm_L9_Link" />
+    <child link="Arm_L10_Link" />
+    <axis xyz="0 0 -1" />
+    <limit lower="0" upper="0.04" effort="30" velocity="0.05" />
+  </joint>
+  <link name="Arm_L11_Link">
+    <inertial>
+      <origin xyz="0.00090072 -0.14322 -0.057244" rpy="0 0 0" />
+      <mass value="0.027748" />
+      <inertia ixx="9.6216E-06" ixy="9.9808E-08" ixz="1.7315E-08" iyy="3.5256E-06" iyz="1.3005E-06" izz="1.0224E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/gripper/Arm_L11_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+    <collision name="Arm_L11_Link_sphere_0">
+      <origin xyz="0.00250 -0.14420 -0.05620" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02500" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L11_Link_sphere_1">
+      <origin xyz="-0.00450 -0.18870 -0.05180" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01640" />
+      </geometry>
+    </collision>
+    <collision name="Arm_L11_Link_sphere_2">
+      <origin xyz="-0.01190 -0.13690 -0.06660" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01790" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Arm_L11_Joint" type="prismatic">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="Arm_L9_Link" />
+    <child link="Arm_L11_Link" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.04" effort="30" velocity="0.05" />
+    <mimic joint="Arm_L10_Joint" multiplier="1" offset="0" />
+  </joint>
+  <link name="head_Link_1">
+    <inertial>
+      <origin xyz="-0.00036181 -0.012522 -0.017538" rpy="0 0 0" />
+      <mass value="1.3932" />
+      <inertia ixx="0.0032973" ixy="6.6693E-06" ixz="-4.9573E-05" iyy="0.003207" iyz="0.00030602" izz="0.0016203" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/head_Link_1.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+    <collision name="head_Link_1_sphere_0">
+      <origin xyz="0.00010 -0.01330 -0.00750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05890" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_1_sphere_1">
+      <origin xyz="0.00160 -0.00240 -0.06750" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_1_sphere_2">
+      <origin xyz="-0.00100 0.00050 0.01800" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Head_J1_Joint" type="revolute">
+    <origin xyz="-0.0135 0 0.648" rpy="0 0 0" />
+    <parent link="waist_Link_3" />
+    <child link="head_Link_1" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="22" velocity="3.14" />
+  </joint>
+  <link name="head_Link_2">
+    <inertial>
+      <origin xyz="0.05658 0.029152 -0.018873" rpy="0 0 0" />
+      <mass value="1.0577" />
+      <inertia ixx="0.00480604" ixy="0.0009986" ixz="0.00088202" iyy="0.00414727" iyz="0.00057025" izz="0.0053477" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/head_Link_2.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 0 1 1" />
+      </material>
+    </visual>
+    <collision name="head_Link_2_sphere_0">
+      <origin xyz="0.06000 0.05480 -0.00480" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06560" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_1">
+      <origin xyz="0.06000 -0.00520 -0.02480" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06070" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_2">
+      <origin xyz="0.08000 0.09480 0.01520" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05270" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_3">
+      <origin xyz="0.00080 0.00600 -0.03470" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_4">
+      <origin xyz="0.08840 0.00330 0.03950" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_5">
+      <origin xyz="0.08740 0.08510 -0.04340" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04500" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_6">
+      <origin xyz="0.08000 0.05480 0.03520" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.04610" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_7">
+      <origin xyz="0.08000 -0.04520 0.01520" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.02350" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_8">
+      <origin xyz="0.06000 0.01480 -0.02480" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.06150" />
+      </geometry>
+    </collision>
+    <collision name="head_Link_2_sphere_9">
+      <origin xyz="0.08000 0.09480 -0.02480" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.05220" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Head_J2_Joint" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="head_Link_1" />
+    <child link="head_Link_2" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.6109" upper="0.4363" effort="22" velocity="3.14" />
+  </joint>
+  <link name="head_depth_camera_Link">
+    <inertial>
+      <origin xyz="-0.0155 -0.00004 -0.01274" rpy="0 0 0" />
+      <mass value="0.075" />
+      <inertia ixx="0.00000925" ixy="-0.00000005" ixz="-0.00000049" iyy="0.00005036" iyz="-0.00000001" izz="0.00004973" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/head_depth_camera_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="head_depth_camera_joint" type="fixed">
+    <origin xyz="0.11485 0.064903 -0.0175" rpy="0 1.5708 0" />
+    <parent link="head_Link_2" />
+    <child link="head_depth_camera_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="left_eye_camera_Link">
+    <inertial>
+      <origin xyz="0.00000454 -0.00014879 -0.01886554" rpy="0 0 0" />
+      <mass value="0.05" />
+      <inertia ixx="0.00000491" ixy="0" ixz="0" iyy="0.00000489" iyz="0.00000011" izz="0.00000453" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/left_eye_camera_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_eye_camera_joint" type="fixed">
+    <origin xyz="0.1162 0.1084 -0.02977" rpy="0 1.5708 0" />
+    <parent link="head_Link_2" />
+    <child link="left_eye_camera_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="right_eye_camera_Link">
+    <inertial>
+      <origin xyz="0.00000454 -0.00014879 -0.01886554" rpy="0 0 0" />
+      <mass value="0.05" />
+      <inertia ixx="0.00000491" ixy="0" ixz="0" iyy="0.00000489" iyz="0.00000011" izz="0.00000453" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/right_eye_camera_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="1 0 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_eye_camera_joint" type="fixed">
+    <origin xyz="0.1162 0.1084 0.03023" rpy="0 1.5708 0" />
+    <parent link="head_Link_2" />
+    <child link="right_eye_camera_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+  <link name="waist_depth_camera_Link">
+    <inertial>
+      <origin xyz="-0.0155 -0.00004 -0.01274" rpy="0 0 0" />
+      <mass value="0.075" />
+      <inertia ixx="0.00000925" ixy="-0.00000005" ixz="-0.00000049" iyy="0.00005036" iyz="-0.00000001" izz="0.00004973" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://gento_skye_description/meshes/skye/waist_depth_camera_Link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0 1 0 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="waist_depth_camera_joint" type="fixed">
+    <origin xyz="0.13079 0.0175 0.27246" rpy="1.8326 0 1.5708" />
+    <parent link="waist_Link_3" />
+    <child link="waist_depth_camera_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+</robot>
