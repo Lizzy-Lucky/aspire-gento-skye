@@ -7,7 +7,8 @@ Use this before rerunning a seed, a stage or a whole campaign.
    complete clean slate for that seed. A whole campaign is `$RUN_ROOT/behavior/<suite>/`.
    Never delete individual attempt directories: they are the evidence, including the failures.
 2. Rerunning a Stage 1 seed also means deciding what to do with the skills it contributed. If
-   they came only from that seed, pull them back out of `skill-library/` before the rerun.
+   they came only from that seed, pull them back out of `skill-library/` and out of the matching
+   entries in `skill-library-general/` before the rerun.
 3. **A Stage 2 seed is never rerun to get a better number.** Rerun it only when the run itself
    was invalid, for example a launch crash or a second simulator on the card, and say so in
    `campaign-state.md`.

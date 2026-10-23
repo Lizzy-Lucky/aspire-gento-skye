@@ -131,5 +131,5 @@ in [Recorded runs](run-artifacts.md) applies unchanged.
 
 A successful radio run on this bench takes 80-95 s of wall time (about 35 s of it Kit start-up
 and scene load) and 370-440 ticks; a trash run 115-130 s and 650-780 ticks. `outcome.json` reports
-`termination_reason: task_succeeded` the tick the witness sees the object held and 5 mm up, and
+`termination_reason: task_succeeded` the tick the witness sees the object held and 10 cm up, and
 `evaluation/protocol.json` carries the tick indices and the measured clearance.

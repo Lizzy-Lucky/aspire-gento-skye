@@ -17,8 +17,11 @@ export OMNIGIBSON_APPDATA_PATH=/root/gpufree-data/aspire/behavior-appdata
 export OMNIGIBSON_GPU_ID=0
 export CUDA_VISIBLE_DEVICES=0
 export LD_LIBRARY_PATH="$PWD/.venv-behavior/lib/python3.11/site-packages/nvidia/cuda_nvrtc/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export TMPDIR=/root/gpufree-data/aspire/isaac-tmp && mkdir -p "$TMPDIR"
 ulimit -c 0
 ```
+
+`TMPDIR` 这一行必须有：OmniGibson 每次运行都在临时目录里解出约 1.1 GB 的 USD，Kit 退出时崩溃（退出码 139）不会清理，留在 `/tmp` 会在二三十次运行后塞满 30 GB 的系统盘，之后每次复位都报 `No space left on device`。放到数据盘上，并定期删掉 `$TMPDIR/tmp*`（确认没有 Isaac 在跑时）。
 
 `LD_LIBRARY_PATH` 这一行给 cuRobo 用。PyTorch 自带 12.6 版的 `libnvrtc`，编译规划内核时要找同目录下的 `libnvrtc-builtins.so.12.6`；系统路径里只有 CUDA 12.8 的版本。缺这一行时，`move_to_pose` 返回 `planner_failed`，输出里有 `failed to open libnvrtc-builtins.so.12.6`。
 

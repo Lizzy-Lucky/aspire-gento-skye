@@ -1,9 +1,10 @@
-"""Host-side pickup witness for the BEHAVIOR-1K R1 Pro tasks.
+"""Host-side pickup witness for BEHAVIOR-1K mobile pickup tasks.
 
-Success is the ASPIRE-comparable rule: the robot's grasp holds the target object AND the object
-sits at least ``LIFT_THRESHOLD_M`` above the height it had when the task instance was loaded.
-Unlike the reference, the baseline is captured after the instance load, and success is latched
-on the first step both conditions hold (``DEBOUNCE_STEPS`` consecutive steps, zero today).
+Success requires the robot's grasp to hold the target object AND the object to sit at least
+``LIFT_THRESHOLD_M`` (10 cm) above the height it had when the task instance was loaded.
+The baseline is captured after the instance load, and success is latched on the first step
+both conditions hold (``DEBOUNCE_STEPS`` consecutive steps, zero today). The episode ends on
+that step, so the threshold is the lift the video is allowed to show.
 
 Only booleans, step indices and clearances leave this module; generated programs never see it.
 """
@@ -17,8 +18,14 @@ import numpy as np
 
 from cap_harness.contracts import RobotAction, StepResult
 
-LIFT_THRESHOLD_M = 0.005
-"""Minimum rise above the instance-start height, ASPIRE's 5 mm."""
+LIFT_THRESHOLD_M = 0.10
+"""Minimum rise above the instance-start height.
+
+10 cm, not 5 mm. The episode ends the tick this clearance is reached while the grasp holds,
+so 5 mm stopped ``turning_on_radio`` on contact: those runs rose 5.7–7.0 mm and the video
+shows a bump. Ungrasped knocks on the same task already reach about 2 cm. 10 cm is above
+those knocks and inside the 15 cm torso lift used to pick the object up.
+"""
 DEBOUNCE_STEPS = 0
 """Extra consecutive steps both predicates must hold before success latches (ASPIRE: none)."""
 

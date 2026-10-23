@@ -15,6 +15,7 @@
 | 5 | [gento-skye-troubleshooting.md](gento-skye-troubleshooting.md) | 运行出错、窗口关掉、`steps_executed` 为 0、规划失败；每次运行的原始记录 |
 | 6 | [gento-skye-collision-spheres.md](gento-skye-collision-spheres.md) | 改 cuRobo 碰撞球、忽略列表，或者想换到 MoveIt |
 | 7 | [gpufree-behavior-gento-skye.md](gpufree-behavior-gento-skye.md) | 重装环境、重下数据、重新导入机器人 |
+| 8 | [gento-skye-assisted-grasp.md](gento-skye-assisted-grasp.md) | 怎样算抓住了收音机；辅助抓取射线怎么定义、怎么用 |
 
 ## 2. 全流程
 
@@ -142,10 +143,11 @@ USD 太大（约 491 MB），不备份；它由导入配置重新生成。
 | 18 | 用忽略列表去绕开重叠 | 球太胖造成的重叠被当成结构接触；会漏掉真碰撞（底盘↔腰、躯干↔肩） | 撤掉；只忽略有依据的四类 | collision-spheres 第 4、7 节 |
 | 19 | cuRobo 自带的球拟合漏覆盖 5–20 cm | 网格是多块零件拼成的开口外壳 | 改用各零件凸包的并集 + 贪心覆盖 | collision-spheres 第 5 节 |
 | 20 | 说“球对在快速算法上限以内”，实际超限 | 漏算了每只手 32 颗抓取预留球（`extra_collision_spheres`） | 实际 30304 对，走慢速算法，结果正确，一次规划约 3 s | collision-spheres 第 8 节 |
-| 21 | 立柱后方碰撞模型比实物胖约 15 cm | 凹形零件取凸包会把凹处填实；“虚胖”是对凸包量的，看不出来 | 暂不改；需要时用 V-HACD 分解 | collision-spheres 第 5.6 节 |
+| 21 | 立柱后方碰撞模型比实物胖约 15 cm | 凹形零件取凸包会把凹处填实；“虚胖”是对凸包量的，看不出来 | 暂不改；需要时用 V-HACD 分解 | collision-spheres 第 5.7 节 |
 | 22 | 用脚本改导入配置后注释没了 | `yaml.safe_dump` 不保留注释 | `apply_collision_spheres.py` 自动插回；手改后用 `grep -c "^ *#"` 核对 | collision-spheres 第 13 节 |
 | 23 | 导出 MoveIt 时传感器连杆一直“碰撞” | IMU、相机在外壳里，带着原网格又没有忽略条目 | 不在 cuRobo 碰撞列表的连杆去掉碰撞体 | collision-spheres 第 12 节 |
 | 24 | 每次运行都留下视频 | 默认录三路相机 mp4 | 需要时加 `--no-videos`；旧运行目录整个删，别只删视频 | startup 第 2 节 |
+| 25 | 复位时报 `No space left on device`，`harness_error`，0 步 | OmniGibson 每次运行在 `tempfile.mkdtemp()`（默认 `/tmp`，系统盘只有 30 GB）解出约 1.1 GB 的 USD；Kit 退出时 segfault（139），清理没执行，每跑一次漏 1.1 GB，25 次就把系统盘塞满 | 运行前 `export TMPDIR=/root/gpufree-data/aspire/isaac-tmp`（数据盘），每次运行后清掉该目录下的 `tmp*`；`outputs/runs/gento-skye-radio/run_attempt.sh` 已经这样做。已经塞满时，确认没有 Isaac 在跑，再删 `/tmp/tmp*` 里含 `.usd` 的大目录 | startup 第 1 节 |
 
 ## 6. 运行开关速查
 

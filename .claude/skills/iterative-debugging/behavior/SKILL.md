@@ -86,10 +86,11 @@ the skill library starts empty.
 
 ```
 $RUN_ROOT/behavior/
-├── skill-library/               # SHARED and cumulative across both tasks
+├── skill-library/               # SHARED scene library, cumulative across both tasks
+├── skill-library-general/       # elevated twin, written in the same edit; not frozen, not read by Stage 2
 └── <suite>/
 ├── campaign-state.md            # coordinator's ledger: seed, stage, attempts, outcome
-├── skill-library-frozen/        # this task's read-only snapshot, taken at its freeze
+├── skill-library-frozen/        # snapshot of skill-library/ only, taken at its freeze
 ├── frozen-manifest.sha256
 ├── stage1/seed_26 … seed_35/
 │   ├── policy.py                # grows block by block
@@ -106,7 +107,8 @@ $RUN_ROOT/behavior/
    library is what it left: use it as it stands, and do not reset it.
 2. Stage 1: for each seed 26 to 35 in order, dispatch one worker with
    [subagent-prompt.md](subagent-prompt.md) at `STAGE: 1`. After each seed, fold what worked into
-   `skill-library/` and record the seed in `campaign-state.md`.
+   `skill-library/` and write the elevated twin into `skill-library-general/` in the same edit.
+   Record the seed in `campaign-state.md`. The next seed reads `skill-library/` only.
 3. Freeze after seed 35, following [main-agent-prompt.md](main-agent-prompt.md). Nothing in the
    library, the prompts, the config or the protocol changes after this point.
 4. Stage 2: for each seed 1 to 25, dispatch one **fresh** worker at `STAGE: 2` with the frozen

@@ -79,7 +79,7 @@ block past the first that was written without running the ones before it is a gu
 
 | | STAGE 1 (seeds 26-35) | STAGE 2 (seeds 1-25) |
 |---|---|---|
-| Skill library | read **and** write the shared `behavior/skill-library/` | read-only, this task's `skill-library-frozen/` snapshot; writing to it is a protocol violation |
+| Skill library | read **and** write the shared `behavior/skill-library/`; in the same edit write the elevated twin `behavior/skill-library-general/` | read-only, this task's `skill-library-frozen/` snapshot; writing to either library is a protocol violation |
 | Blocks | append or revise any block; inherited code may be seeded several blocks at a time | **append only**, and **one authored block per attempt**; never revise or delete an earlier block |
 | Other seeds | may read earlier Stage 1 seeds of this campaign | this seed only, nothing else |
 | Starting policy | empty | empty |
@@ -97,8 +97,9 @@ CaP: LLMs write Python programs that control the robot through a typed public AP
 `cap-harness run`. The task is a pickup sub-goal: `turning_on_radio` means "pick up the red radio"
 from the living-room table; `picking_up_trash` means "pick up the blue can of soda" from the
 living-room floor. Success is judged by a host-side witness: the grasp holds the target and the
-target is at least 5 mm above its start height, checked after every simulator tick and latched the
-first time both hold. There is no placing, no toggling, no BDDL goal to satisfy. `program_ok`
+target is at least 10 cm above its start height, checked after every simulator tick and latched the
+first time both hold. A few millimetres is contact. The episode ends on the latch, so 5 mm used
+to stop the video on the bump. There is no placing, no toggling, no BDDL goal to satisfy. `program_ok`
 means the program ran without error and without hitting `MAX_STEPS`.
 
 **Program rules** (full contract in `docs/api-reference.md`):
@@ -329,9 +330,8 @@ A=$(printf 'attempt_%03d' "$N")
    `$SEED_DIR/attempts/$A/<seed>/<run-id>/`, and everything below is relative to it:
    `outcome.json` (`task_success`, `program_ok`, `termination_reason`, `steps_executed`);
    `evaluation/protocol.json`, read as a pair: `max_clearance_m` **with** `checks.held`. Clearance
-   alone is not progress. Measured on seed 27, the largest clearances came from the arm knocking
-   the object with no grasp at all, while both successful attempts read barely over the 5 mm
-   threshold. `lifted` true with `held` false means you knocked it, which is worse than a clean
+   alone is not progress. Ungrasped knocks on this robot already move the object by about 2 cm.
+   Success is the grasp still holding the target 10 cm above the start height. `lifted` true with `held` false means you knocked it, which is worse than a clean
    miss; `held` false with clearance near zero and a real gripper reading means you are close;
    `source/program-result.json` (your `report`);
    `logs/program.stdout` (whatever you printed, and read it sceptically: a line printed
@@ -454,6 +454,15 @@ base motion, standoff and approach poses → `navigation.md`; grasp candidates, 
 `mobile-grasp.md`; step and wall-clock costs → `time-budget.md`; launch, crash and memory
 behaviour → `isaac-operations.md`. Write skills as a trigger, a snippet that ran, and the
 evidence (seed and attempt). A skill with no working snippet is a note, not a skill.
+
+**Same edit, second file.** Also write `$RUN_ROOT/behavior/skill-library-general/<same filename>`.
+The scene file keeps object names and measured thresholds. The general file is the rule that
+still says what to do after the object name and the room name are deleted. Its inputs are only
+what the public API measures on the next episode (segmentation score, point cloud, gripper
+width, current-pose IK, reach map). Put this scene's numbers on a Calibration line with the
+same `(task, seed, attempt)`. Do not read the general file when choosing the next block: the
+next seed of this campaign reads `$LIBRARY` only, because the scene warnings are the ones this
+task still needs. Do not copy the general file into the freeze.
 
 **Stage 2:** write nothing outside `$SEED_DIR`.
 

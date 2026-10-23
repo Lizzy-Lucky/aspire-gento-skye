@@ -237,7 +237,7 @@ def test_success_is_latched_from_the_bound_witness_and_terminates_the_step() -> 
     adapter.bind_protocol_evaluator(witness)
     assert not adapter.check_success()
     env.robots[0].grasping["left"] = env.target
-    env.target.position[2] += 0.02
+    env.target.position[2] += 0.11
     result = adapter.step(_hold(adapter))
     assert result.terminated and adapter.check_success()
     assert adapter.success_observed_step == 1
@@ -505,6 +505,24 @@ def test_servo_base_is_rate_limited_so_it_cannot_sweep_the_scene() -> None:
     assert max(steps) <= BASE_SERVO_STEP_M + 1e-6, f"a tick moved {max(steps):.4f} m"
     expected = (1.0 - 0.05) / BASE_SERVO_STEP_M
     assert len(steps) >= expected - 1, f"only {len(steps)} ticks for a metre; the leg jumped"
+
+
+def test_servo_stops_before_a_base_step_enters_the_scene() -> None:
+    adapter, factory = _adapter()
+    adapter.reset("picking_up_trash", 1)
+    start = np.array(adapter.get_base_pose()[:2], dtype=np.float64)
+
+    current = np.array(adapter._q_target, dtype=np.float64)
+
+    class _Probe:
+        def scene_collision(self, q_full, *, refresh: bool) -> bool:
+            return not np.allclose(np.asarray(q_full, dtype=np.float64), current)
+
+    adapter._planner = _Probe()
+    result = adapter.navigate_to_pose(1.0, 0.0, 0.0, planner="servo", max_steps=30)
+    assert not result.ok and result.error.code == ErrorCode.PLANNING_FAILED
+    assert "table or lamp" in result.error.message
+    assert np.allclose(adapter.get_base_pose()[:2], start)
 
 
 def test_navigation_fails_loudly_when_the_base_leaves_the_floor() -> None:

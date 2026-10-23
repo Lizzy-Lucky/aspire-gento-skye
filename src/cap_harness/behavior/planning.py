@@ -34,6 +34,11 @@ from cap_harness.errors import ApiError, ErrorCode
 from cap_harness.geometry import pose_to_matrix
 
 PLANNER_NAME = "curobo_omnigibson"
+# A coffee table or floor lamp is large enough that its AABB contains a fingertip aimed at
+# something on or beside it. The grasp exclusion would then delete it, and the base, torso,
+# and locked head plan straight through it. These stay in the collision world; the object
+# being grasped (the radio) does not match and is still removed so the fingers can enter it.
+_PROTECTED_OBSTACLE_TOKENS = ("table", "lamp", "desk")
 DEFAULT_BATCH_SIZE = 1
 """One cuRobo seed batch: three seeds triple the warm-up memory next to Isaac on a 24 GB GPU."""
 DEFAULT_USE_CUDA_GRAPH = False
@@ -50,6 +55,9 @@ GOAL_CONTAINMENT_MARGIN_M = 0.02
 arm is reaching into, so it is left out of the collision world for that plan, as OmniGibson's own
 grasp primitive does with its target. Tables and floors never contain a goal above them.
 """
+FINGER_XY_MARGIN_M = 0.05
+"""Horizontal margin for the finger-centre test: handles and cords stick out of an object's root
+bounds (the radio's wire bail, turning_on_radio seed 27), and the fingers straddle them."""
 BASE_PRISMATIC_LIMIT_M = 12.0
 """cuRobo bound on the base's virtual x/y joints, measured from the articulation root.
 
@@ -109,6 +117,14 @@ def _tensor(values: np.ndarray) -> Any:
     except ImportError:  # pragma: no cover - exercised only without torch
         return np.asarray(values, dtype=np.float32)
     return torch.as_tensor(np.asarray(values, dtype=np.float32))
+
+
+def _protected_obstacle(obj: Any) -> bool:
+    """Tables, desks, and lamps are never dropped from the collision world."""
+    category = str(getattr(obj, "category", "") or "")
+    name = str(getattr(obj, "name", "") or "")
+    text = f"{category} {name}".lower().replace("-", " ").replace("_", " ")
+    return any(token in text for token in _PROTECTED_OBSTACLE_TOKENS)
 
 
 def _batched(values: np.ndarray, batch_size: int) -> Any:
@@ -295,8 +311,14 @@ class OmniGibsonCuroboPlanner:
         except Exception:
             return False
 
+    def diagnose_current_configuration_for(self, q_full: Any) -> list[str]:
+        """World-contact links and self-overlap pairs for an arbitrary full joint vector."""
+        return self.diagnose_current_configuration(
+            q_override=q_full, only=("场景碰撞连杆", "自身重叠")
+        )
+
     def diagnose_current_configuration(
-        self, max_pairs: int = 8, emit: Any = None
+        self, max_pairs: int = 8, emit: Any = None, q_override: Any = None, only: Any = None
     ) -> list[str]:
         """Explain why cuRobo treats the robot's current configuration as invalid.
 
@@ -322,6 +344,8 @@ class OmniGibsonCuroboPlanner:
         mg = generator.mg[emb]
         tensor_args = generator.tensor_args
         q = robot.get_joint_positions()
+        if q_override is not None:
+            q = torch.as_tensor(np.asarray(q_override, dtype=np.float32)).reshape(-1)
         q_batch = q.unsqueeze(0)
 
         def collisions() -> None:
@@ -473,11 +497,179 @@ class OmniGibsonCuroboPlanner:
             ("逆运动学自检", ik_probes),
         )
         for label, section in sections:
+            if only is not None and label not in only:
+                continue
             try:
                 section()
             except Exception as exc:  # noqa: BLE001 - one failed section must not hide the rest
                 say(f"{label} 检查失败: {type(exc).__name__}: {exc}")
         return lines
+
+    def _print_ik_failure(
+        self, target_pose: Pose, arm: str, embodiment: Any, native: str, seed: np.ndarray
+    ) -> None:
+        """Bring-up check: does the IK fail on world collision, self collision, or reach?"""
+        try:
+            path, failure = self._compute(
+                {arm: target_pose},
+                embodiment=embodiment.ARM,
+                attached=self._attached_object(native),
+                ik_only=True,
+                initial_joint_pos=_tensor(seed),
+                world_collision_check=False,
+            )
+            generator, _ = self._generator_for()
+            if path is None:
+                print("GENTO_IKFAIL", native, "fails without world collision too:", failure, flush=True)
+                rollouts = generator.mg[embodiment.ARM].ik_solver.get_all_rollout_instances()
+                switched = []
+                for rollout in rollouts:
+                    cost = getattr(rollout, "robot_self_collision_constraint", None)
+                    if cost is not None and cost.enabled:
+                        cost.disable_cost()
+                        switched.append(cost)
+                try:
+                    path, failure = self._compute(
+                        {arm: target_pose},
+                        embodiment=embodiment.ARM,
+                        attached=self._attached_object(native),
+                        ik_only=True,
+                        initial_joint_pos=_tensor(seed),
+                        world_collision_check=False,
+                    )
+                finally:
+                    for cost in switched:
+                        cost.enable_cost()
+                if path is None:
+                    print("GENTO_IKFAIL", native, "fails with no collision checks at all:", failure, flush=True)
+                    return
+                print("GENTO_IKFAIL", native, "solvable only without self collision", flush=True)
+                for line in self.diagnose_current_configuration_for(path[-1]):
+                    print("GENTO_IKFAIL", line, flush=True)
+                self._print_arm_self_collision(path[-1], embodiment)
+                return
+            q = _tensor(np.asarray(path[-1], dtype=np.float64).reshape(1, -1))
+            world = bool(_to_numpy(generator.check_collisions(q, self_collision_check=False)).reshape(-1)[0])
+            both = bool(_to_numpy(generator.check_collisions(q, self_collision_check=True)).reshape(-1)[0])
+            print("GENTO_IKFAIL", native, f"solvable without world check; world_hit={world} any_hit={both}", flush=True)
+            for line in self.diagnose_current_configuration_for(path[-1]):
+                print("GENTO_IKFAIL", line, flush=True)
+        except Exception as exc:  # noqa: BLE001 - diagnostics only
+            print("GENTO_IKFAIL failed", type(exc).__name__, exc, flush=True)
+
+    def _print_arm_self_collision(self, q_full: np.ndarray, embodiment: Any) -> None:
+        """Self-collision of a joint vector as the ARM embodiment's IK sees it (locked joints applied)."""
+        import omnigibson.lazy as lazy
+        import torch
+
+        try:
+            generator, _ = self._generator_for()
+            mg = generator.mg[embodiment.ARM]
+            q = _tensor(np.asarray(q_full, dtype=np.float64).reshape(1, -1))
+            full_js = lazy.curobo.types.state.JointState(
+                position=generator._tensor_args.to_device(q), joint_names=generator.robot_joint_names
+            )
+            generator.update_locked_joints(full_js, embodiment.ARM)
+            cu_js = full_js.get_ordered_joint_state(mg.kinematics.joint_names)
+            state = mg.compute_kinematics(cu_js)
+            spheres_t = state.robot_spheres
+            values = []
+            for rollout in mg.ik_solver.get_all_rollout_instances()[:1]:
+                cost = getattr(rollout, "robot_self_collision_constraint", None)
+                if cost is not None:
+                    with torch.no_grad():
+                        values.append(float(_to_numpy(cost.forward(spheres_t.reshape(1, 1, -1, 4))).reshape(-1)[0]))
+            config = mg.kinematics.kinematics_config
+            spheres = _to_numpy(spheres_t).reshape(-1, 4).astype(np.float64)
+            link_of = _to_numpy(config.link_sphere_idx_map).astype(int).reshape(-1)
+            name_of = {int(i): n for n, i in config.link_name_to_idx_map.items()}
+            scc = mg.kinematics.get_self_collision_config()
+            offset = _to_numpy(scc.offset).astype(np.float64).reshape(-1)
+            matrix = getattr(scc, "collision_matrix", None)
+            matrix = None if matrix is None else _to_numpy(matrix).astype(np.float64)
+            active = spheres[:, 3] > -1.0
+            zero_links = sorted({name_of.get(int(link_of[k]), "?") for k in range(len(spheres)) if -1.0 < spheres[k, 3] <= 0.0})
+            idx = np.nonzero(active)[0]
+            centers = spheres[idx, :3]
+            gaps = np.linalg.norm(centers[:, None, :] - centers[None, :, :], axis=-1)
+            padded = spheres[idx, 3] + offset[idx]
+            thresholds = padded[:, None] + padded[None, :]
+            depth = thresholds - gaps
+            worst: dict[tuple[str, str], float] = {}
+            for i in range(len(idx)):
+                for j in range(i + 1, len(idx)):
+                    if depth[i, j] <= 0:
+                        continue
+                    if matrix is not None and matrix.ndim == 2 and matrix[idx[i], idx[j]] == 0:
+                        continue
+                    a = name_of.get(int(link_of[idx[i]]), "?")
+                    b = name_of.get(int(link_of[idx[j]]), "?")
+                    if a == b:
+                        continue
+                    key = tuple(sorted((a, b)))
+                    worst[key] = max(worst.get(key, 0.0), float(depth[i, j]))
+            ranked = sorted(worst.items(), key=lambda kv: -kv[1])[:6]
+            now_js = lazy.curobo.types.state.JointState(
+                position=generator._tensor_args.to_device(
+                    _tensor(_to_numpy(self._adapter.robot.get_joint_positions()).astype(np.float64).reshape(1, -1))
+                ),
+                joint_names=generator.robot_joint_names,
+            )
+            generator.update_locked_joints(now_js, embodiment.ARM)
+            now_state = mg.compute_kinematics(now_js.get_ordered_joint_state(mg.kinematics.joint_names))
+            now_cost = []
+            for rollout in mg.ik_solver.get_all_rollout_instances()[:1]:
+                cost = getattr(rollout, "robot_self_collision_constraint", None)
+                if cost is not None:
+                    with torch.no_grad():
+                        now_cost.append(float(_to_numpy(cost.forward(now_state.robot_spheres.reshape(1, 1, -1, 4))).reshape(-1)[0]))
+            print("GENTO_ARMSELF cost", values, "now_cost", now_cost, "zero_radius_links", zero_links,
+                  "pairs", [(a, b, round(v * 100, 1)) for (a, b), v in ranked], flush=True)
+        except Exception as exc:  # noqa: BLE001 - diagnostics only
+            print("GENTO_ARMSELF failed", type(exc).__name__, exc, flush=True)
+
+    def _print_ik_fk(self, q_full: np.ndarray, target_pose: Pose, native: str) -> None:
+        """Bring-up check: where the ARM and DEFAULT kinematics put the eef for an IK solution."""
+        import omnigibson.lazy as lazy
+
+        try:
+            generator, embodiment = self._generator_for()
+            robot = self._adapter.robot
+            link_name = str(robot.eef_link_names[native])
+            q = _tensor(np.asarray(q_full, dtype=np.float64).reshape(1, -1))
+            target_world = (
+                self._adapter.world_from_odom
+                @ np.append(np.asarray(target_pose.position, dtype=np.float64), 1.0)
+            )[:3]
+            rows = [f"target {np.round(target_world, 3).tolist()}"]
+            q_now = _tensor(
+                _to_numpy(robot.get_joint_positions()).astype(np.float64).reshape(1, -1)
+            )
+            sim_now = _to_numpy(robot.links[link_name].get_position_orientation()[0]).reshape(-1)
+            rows.append(f"sim_now {np.round(sim_now, 3).tolist()}")
+            for label, emb, q_use in (
+                ("ARM", embodiment.ARM, q),
+                ("DEFAULT", embodiment.DEFAULT, q),
+                ("FK_now", embodiment.DEFAULT, q_now),
+            ):
+                mg = generator.mg[emb]
+                full_js = lazy.curobo.types.state.JointState(
+                    position=generator._tensor_args.to_device(q_use),
+                    joint_names=generator.robot_joint_names,
+                )
+                generator.update_locked_joints(full_js, emb)
+                cu_js = full_js.get_ordered_joint_state(mg.kinematics.joint_names)
+                state = mg.compute_kinematics(cu_js)
+                if link_name == str(generator.ee_link[emb]):
+                    fk = _to_numpy(state.ee_pos_seq).reshape(-1, 3)[0]
+                else:
+                    fk = _to_numpy(state.link_poses[link_name].position).reshape(-1, 3)[0]
+                base_pos, base_quat = robot.links[generator.base_link[emb]].get_position_orientation()
+                world = _quat_xyzw_matrix(base_quat) @ fk + _to_numpy(base_pos).reshape(-1)
+                rows.append(f"{label} {np.round(world, 3).tolist()}")
+            print("GENTO_IKFK", native, " | ".join(rows), flush=True)
+        except Exception as exc:  # noqa: BLE001 - diagnostics only
+            print("GENTO_IKFK failed", type(exc).__name__, exc, flush=True)
 
     def _held_objects(self) -> list[Any]:
         """Objects assisted-grasped by either hand (they ride with the hand, never obstacles)."""
@@ -489,6 +681,18 @@ class OmniGibsonCuroboPlanner:
         robot = self._adapter.robot
         links = getattr(robot, "eef_links", None) or {}
         points = [_link_position(links.get(native)) for native in native_arms]
+        lengths = getattr(robot, "eef_to_fingertip_lengths", None) or {}
+        for native in native_arms:
+            link, per_finger = links.get(native), lengths.get(native) or {}
+            if link is None or not per_finger:
+                continue
+            try:
+                position, xyzw = link.get_position_orientation()
+            except Exception:
+                continue
+            reach = 0.85 * float(np.mean([float(value) for value in per_finger.values()]))
+            axis = _quat_xyzw_matrix(xyzw)[:, 2]
+            points.append(_to_numpy(position).astype(np.float64).reshape(3) + axis * reach)
         return [point for point in points if point is not None]
 
     def _plan_exclusions(self, native_arms: list[str], goal_points: list[np.ndarray]) -> list[Any]:
@@ -504,7 +708,54 @@ class OmniGibsonCuroboPlanner:
                 unique.append(obj)
         return unique
 
-    def _objects_containing(self, world_points: list[np.ndarray]) -> list[Any]:
+    def _print_nearby_bounds(self, points: list[np.ndarray]) -> None:
+        """Bring-up check: goal points and the bounds of the three nearest scene objects."""
+        try:
+            robot = self._adapter.robot
+            scene = getattr(robot, "scene", None)
+            rows = []
+            for obj in list(getattr(scene, "objects", []) or []):
+                if obj is robot:
+                    continue
+                bounds = _object_bounds(obj)
+                if bounds is None:
+                    continue
+                centre = 0.5 * (bounds[0] + bounds[1])
+                rows.append((float(np.linalg.norm(centre[:2] - points[-1][:2])), obj, bounds))
+            rows.sort(key=lambda row: row[0])
+            text = " | ".join(
+                f"{getattr(obj, 'name', obj)} lo {np.round(b[0], 3).tolist()} hi {np.round(b[1], 3).tolist()}"
+                f" visual_only={getattr(obj, 'visual_only', False)}"
+                for _, obj, b in rows[:3]
+            )
+            pts = [np.round(np.asarray(p, dtype=np.float64), 3).tolist() for p in points]
+            print("GENTO_EXCL points", pts, "nearest", text, flush=True)
+        except Exception as exc:  # noqa: BLE001 - diagnostics only
+            print("GENTO_EXCL failed", type(exc).__name__, exc, flush=True)
+
+    def _finger_goal_points(
+        self, targets: Mapping[str, Pose], codec: BehaviorActionCodec
+    ) -> list[np.ndarray]:
+        """World points between the fingers of each goal pose.
+
+        OmniGibson's eef frame has +z toward the fingers; on robots whose eef origin sits well
+        behind the fingers (Gento Skye: 12 cm) the origin never enters the object being grasped.
+        """
+        lengths = getattr(self._adapter.robot, "eef_to_fingertip_lengths", None) or {}
+        world_from_odom = self._adapter.world_from_odom
+        points: list[np.ndarray] = []
+        for arm, pose in targets.items():
+            per_finger = lengths.get(codec.native_arm(arm)) or {}
+            if not per_finger:
+                continue
+            reach = 0.85 * float(np.mean([float(value) for value in per_finger.values()]))
+            world = world_from_odom @ pose_to_matrix(pose)
+            points.append(world[:3, 3] + world[:3, 2] * reach)
+        return points
+
+    def _objects_containing(
+        self, world_points: list[np.ndarray], xy_margin: float = GOAL_CONTAINMENT_MARGIN_M
+    ) -> list[Any]:
         """Scene objects whose axis-aligned bounds contain any of ``world_points``."""
         robot = self._adapter.robot
         scene = getattr(robot, "scene", None)
@@ -516,8 +767,9 @@ class OmniGibsonCuroboPlanner:
             bounds = _object_bounds(obj)
             if bounds is None:
                 continue
-            lower = bounds[0] - GOAL_CONTAINMENT_MARGIN_M
-            upper = bounds[1] + GOAL_CONTAINMENT_MARGIN_M
+            margin = np.array([xy_margin, xy_margin, GOAL_CONTAINMENT_MARGIN_M])
+            lower = bounds[0] - margin
+            upper = bounds[1] + margin
             for point in world_points:
                 if bool(np.all(point >= lower) and np.all(point <= upper)):
                     found.append(obj)
@@ -548,6 +800,7 @@ class OmniGibsonCuroboPlanner:
         attached: Mapping[str, Any] | None,
         ik_only: bool,
         initial_joint_pos: np.ndarray | None = None,
+        world_collision_check: bool = True,
     ) -> tuple[np.ndarray | None, str | None]:
         """Run cuRobo once; return the full joint-space path (T, D) or a failure message."""
         generator, _ = self._generator_for()
@@ -558,9 +811,17 @@ class OmniGibsonCuroboPlanner:
             for pose in targets.values()
         ]
         codec_for_arms: BehaviorActionCodec = self._adapter._require_codec()
+        finger_points = self._finger_goal_points(targets, codec_for_arms)
+        goal_points.extend(finger_points)
+        if os.environ.get("GENTO_EXCL_DIAG"):
+            self._print_nearby_bounds(goal_points)
         ignored = self._plan_exclusions(
             [codec_for_arms.native_arm(arm) for arm in targets], goal_points
         )
+        for obj in self._objects_containing(finger_points, xy_margin=FINGER_XY_MARGIN_M):
+            if not any(obj is seen for seen in ignored):
+                ignored.append(obj)
+        ignored = [obj for obj in ignored if not _protected_obstacle(obj)]
         try:
             generator.update_obstacles(ignore_objects=ignored or None)
             response = generator.compute_trajectories(
@@ -580,7 +841,7 @@ class OmniGibsonCuroboPlanner:
                 attached_obj=attached,
                 skip_obstacle_update=True,
                 ik_only=ik_only,
-                ik_world_collision_check=True,
+                ik_world_collision_check=world_collision_check,
                 emb_sel=embodiment,
             )
         except Exception as exc:
@@ -663,7 +924,7 @@ class OmniGibsonCuroboPlanner:
         world[2, 3] = float(_pose_matrix(*robot.get_position_orientation())[2, 3])
         position, xyzw = _matrix_to_xyzw(world)
         link = str(robot.base_footprint_link_name)
-        held = self._held_objects()
+        held = [obj for obj in self._held_objects() if not _protected_obstacle(obj)]
         attached: dict[str, Any] = {}
         for native in getattr(robot, "arm_names", ()):
             bundle = self._attached_object(str(native))
@@ -736,9 +997,13 @@ class OmniGibsonCuroboPlanner:
             embodiment=embodiment.ARM,
             attached=self._attached_object(native),
             ik_only=True,
-            initial_joint_pos=_batched(seed, self._batch_size),
+            # compute_trajectories stacks this into the batch itself; a pre-batched (B, D) seed
+            # becomes (B, B, D) and cuRobo fails with "expand(... size=[])".
+            initial_joint_pos=_tensor(seed),
         )
         if path is None:
+            if os.environ.get("GENTO_IK_FAIL_DIAG"):
+                self._print_ik_failure(target_pose, arm, embodiment, native, seed)
             return IKResult(
                 ok=False,
                 arm=arm,
@@ -748,6 +1013,8 @@ class OmniGibsonCuroboPlanner:
                 ),
             )
         joints = codec.arm_joints(path[-1], arm)
+        if os.environ.get("GENTO_IK_FK_DIAG"):
+            self._print_ik_fk(path[-1], target_pose, native)
         return IKResult(
             ok=True,
             joint_positions=joints,
@@ -793,6 +1060,25 @@ class OmniGibsonCuroboPlanner:
             trajectory=self._trajectory(robot_state, waypoints, arm, gripper_position, "cspace"),
             diagnostics={"provider": PLANNER_NAME, "planning_mode": "cspace", "waypoints": steps},
         )
+
+    def scene_collision(self, q_full: np.ndarray, *, refresh: bool) -> bool:
+        """Whether a full joint vector hits the scene. Tables and lamps stay in that scene.
+
+        Self-collision is off: this gate is for the base, body, and head against furniture,
+        not for the arm folding into itself. ``refresh`` rebuilds the world once per servo.
+        """
+        generator, _ = self._generator_for()
+        if refresh:
+            held = [obj for obj in self._held_objects() if not _protected_obstacle(obj)]
+            generator.update_obstacles(ignore_objects=held or None)
+        check = getattr(generator, "check_collisions", None)
+        if check is None:
+            return False
+        q = np.asarray(q_full, dtype=np.float64).reshape(1, -1)
+        verdict = _to_numpy(
+            check(_tensor(q), self_collision_check=False, skip_obstacle_update=True)
+        )
+        return bool(np.asarray(verdict).reshape(-1)[0])
 
     def _check_arm_path(self, waypoints: np.ndarray, arm: str) -> tuple[bool, str]:
         generator, _ = self._generator_for()

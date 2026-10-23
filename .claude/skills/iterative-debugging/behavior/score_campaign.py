@@ -55,6 +55,23 @@ def _call_names(run: Path) -> set[str]:
     return names
 
 
+def _lifted_far_enough(run: Path) -> bool:
+    """A latched success must have carried the object, not stopped on a 5 mm bump.
+
+    Matches ``LIFT_THRESHOLD_M`` in ``src/cap_harness/validation/evaluators/behavior_pickup.py``.
+    Runs recorded before that change have ``task_success`` true at 5.7–7.0 mm.
+    """
+    protocol_path = run / "evaluation" / "protocol.json"
+    if not protocol_path.is_file():
+        return True
+    try:
+        protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
+        clearance = float(protocol.get("max_clearance_m") or 0.0)
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return True
+    return clearance >= 0.10
+
+
 def episodes(seed: Path) -> list[dict]:
     """Every run of this seed in attempt order, tagged with its program hash."""
     found = []
@@ -77,7 +94,7 @@ def episodes(seed: Path) -> list[dict]:
             {
                 "attempt": attempt.name,
                 "program": hashlib.sha256(program.read_bytes()).hexdigest()[:12],
-                "success": bool(outcome.get("task_success")),
+                "success": bool(outcome.get("task_success")) and _lifted_far_enough(run),
                 # Navigation delivered the robot and the arm worked on the object:
                 # the jaws closed and a trajectory or pose move ran.
                 "reached": bool(names & GRIPPER_CALLS) and bool(names & ARM_CALLS),

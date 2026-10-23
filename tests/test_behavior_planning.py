@@ -55,7 +55,7 @@ class _FakeGenerator:
     def add_linearly_interpolated_waypoints(self, trajectory, max_inter_dist=0.01):
         return np.asarray(trajectory)
 
-    def check_collisions(self, q, skip_obstacle_update=False):
+    def check_collisions(self, q, skip_obstacle_update=False, **kwargs):
         return np.zeros(len(q), dtype=bool)
 
 
@@ -210,6 +210,53 @@ def test_pose_plans_ignore_the_object_that_contains_the_goal() -> None:
     assert [o.name for o in generator.ignored] == ["radio"]
     assert planner.last_ignored_objects == ["radio"]
     assert result.diagnostics["ignored_objects"] == ("radio",)
+
+
+def test_tables_and_lamps_stay_in_the_collision_world() -> None:
+    """A support or lamp whose bounds contain the fingers is still an obstacle."""
+    adapter, planner, generator = _planner()
+    robot = adapter.robot
+
+    class _Obj:
+        def __init__(self, name, category, lower, upper):
+            self.name = name
+            self.category = category
+            self.aabb = (np.array(lower), np.array(upper))
+            self.visual_only = False
+
+    state = adapter.get_robot_state()
+    goal = _pose(adapter)
+    world_goal = (adapter.world_from_odom @ np.append(goal.position, 1.0))[:3]
+    radio = _Obj("radio", "radio", world_goal - 0.05, world_goal + 0.05)
+    table = _Obj("coffee_table_0", "coffee_table", world_goal - 0.8, world_goal + 0.4)
+    lamp = _Obj("floor_lamp_0", "floor_lamp", world_goal - 0.3, world_goal + 1.2)
+    robot.scene = SimpleNamespace(objects=[robot, radio, table, lamp])
+    result = planner.plan_to_pose(state, goal, arm="primary")
+    assert result.ok, result.error
+    assert [obj.name for obj in generator.ignored] == ["radio"]
+
+
+def test_scene_collision_does_not_drop_a_held_lamp() -> None:
+    adapter, planner, generator = _planner()
+
+    class _Obj:
+        def __init__(self, name, category):
+            self.name = name
+            self.category = category
+
+    lamp = _Obj("floor_lamp_0", "floor_lamp")
+    radio = _Obj("radio_0", "radio")
+    adapter.robot._ag_obj_in_hand = {"left": lamp, "right": radio}
+    seen: list[bool] = []
+
+    def check_collisions(q, skip_obstacle_update=False, **kwargs):
+        seen.append(bool(kwargs.get("self_collision_check", True)))
+        return np.array([True])
+
+    generator.check_collisions = check_collisions
+    assert planner.scene_collision(np.zeros(JOINT_COUNT), refresh=True)
+    assert [obj.name for obj in generator.ignored] == ["radio_0"]
+    assert seen == [False]
 
 
 def test_base_plan_failures_carry_curobo_status() -> None:

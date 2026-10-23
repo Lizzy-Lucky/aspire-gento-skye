@@ -1543,6 +1543,24 @@ class BehaviorAdapter:
             diagnostics=diagnostics,
         )
 
+    def _servo_would_enter_scene(self, proposed: np.ndarray, *, refresh: bool) -> bool:
+        """Stop a free base step that would newly hit the scene (table, lamp, or other mesh).
+
+        A step that starts already in contact is allowed, so a retreat can still back out.
+        Servo before any plan has no collision world yet and is not checked.
+        """
+        planner = self._planner
+        query = getattr(planner, "scene_collision", None) if planner is not None else None
+        if query is None:
+            return False
+        try:
+            if not query(proposed, refresh=refresh):
+                return False
+            current = np.asarray(self._q_target, dtype=np.float64)
+            return not bool(query(current, refresh=False))
+        except Exception:
+            return False
+
     def _servo_base(
         self, goal: np.ndarray, tolerance_m: float, tolerance_rad: float, max_steps: int
     ) -> _BaseDrive:
@@ -1566,7 +1584,18 @@ class BehaviorAdapter:
                 delta[:2] *= BASE_SERVO_STEP_M / distance
             delta[2] = float(np.clip(delta[2], -BASE_SERVO_STEP_RAD, BASE_SERVO_STEP_RAD))
             nxt = current + delta
-            self._q_target = codec.apply_base(self._q_target, nxt[0], nxt[1], nxt[2])
+            proposed = codec.apply_base(self._q_target, float(nxt[0]), float(nxt[1]), float(nxt[2]))
+            if self._servo_would_enter_scene(proposed, refresh=steps == 0):
+                return _BaseDrive(
+                    False,
+                    steps,
+                    final,
+                    ApiError(
+                        ErrorCode.PLANNING_FAILED,
+                        "servo stopped: the next base step would hit a table or lamp",
+                    ),
+                )
+            self._q_target = proposed
             result = self.step(self._hold_action())
             if not result.ok or result.observation is None:
                 return _BaseDrive(False, steps, final, result.error)

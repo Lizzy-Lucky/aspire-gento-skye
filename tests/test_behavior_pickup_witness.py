@@ -41,7 +41,7 @@ def _step(witness: BehaviorPickupWitness, ok: bool = True) -> None:
 
 
 def test_rule_constants_match_the_aspire_comparable_decision() -> None:
-    assert LIFT_THRESHOLD_M == 0.005
+    assert LIFT_THRESHOLD_M == 0.10
     assert DEBOUNCE_STEPS == 0
     assert "behavior_pickup" in EVALUATOR_ALLOWLIST
 
@@ -58,10 +58,10 @@ def test_baseline_is_the_height_after_the_instance_load() -> None:
 def test_lift_without_a_grasp_and_grasp_without_a_lift_do_not_count() -> None:
     env = _env()
     witness = BehaviorPickupWitness("turning_on_radio", env, target_scope="radio_receiver.n.01_1")
-    env.target.position[2] += 0.05
+    env.target.position[2] += 0.12
     _step(witness)
     assert not witness.success
-    env.target.position[2] -= 0.05
+    env.target.position[2] -= 0.12
     env.robots[0].grasping["left"] = env.target
     _step(witness)
     assert not witness.success
@@ -74,10 +74,10 @@ def test_success_latches_on_the_first_step_both_hold_and_survives_release() -> N
     witness = BehaviorPickupWitness("turning_on_radio", env, target_scope="radio_receiver.n.01_1")
     _step(witness)
     env.robots[0].grasping["right"] = env.target
-    env.target.position[2] += 0.0049
+    env.target.position[2] += 0.099
     _step(witness)
     assert not witness.success
-    env.target.position[2] += 0.0002
+    env.target.position[2] += 0.002
     _step(witness)
     assert witness.success and witness.success_step == 3
     env.robots[0].grasping["right"] = None
@@ -87,7 +87,7 @@ def test_success_latches_on_the_first_step_both_hold_and_survives_release() -> N
     evidence = witness.evidence(final_native_success=False)
     assert evidence["holding_arm"] == "right"
     assert evidence["success_step"] == 3
-    assert evidence["max_clearance_m"] == pytest.approx(0.0051)
+    assert evidence["max_clearance_m"] == pytest.approx(0.101)
     assert evidence["protocol_success"] is True
 
 

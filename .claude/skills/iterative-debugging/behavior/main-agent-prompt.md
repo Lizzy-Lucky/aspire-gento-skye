@@ -26,9 +26,10 @@ report the seed as invalid) still applies unchanged.
 ## Layout
 
 ```bash
-LIB="$RUN_ROOT/behavior/skill-library"          # shared by both tasks
+LIB="$RUN_ROOT/behavior/skill-library"          # shared scene library, what the next seed reads
+GEN="$RUN_ROOT/behavior/skill-library-general"  # elevated twin; not frozen, not a Stage 2 input
 CAMP="$RUN_ROOT/behavior/$SUITE"
-mkdir -p "$LIB" "$CAMP/stage1" "$CAMP/stage2"
+mkdir -p "$LIB" "$GEN" "$CAMP/stage1" "$CAMP/stage2"
 : > "$CAMP/campaign-state.md"
 ```
 
@@ -50,7 +51,12 @@ For each seed in order:
 1. Dispatch one worker with [subagent-prompt.md](subagent-prompt.md), `STAGE: 1`, that seed only.
 2. When it returns, read its `seed-summary.md` and the skills it wrote.
 3. Fold what generalizes into `skill-library/`, deduplicating against what is already there. A
-   skill needs a trigger, a snippet that ran, and the seed and attempt it came from.
+   skill needs a trigger, a snippet that ran, and the seed and attempt it came from. In the same
+   edit, write the elevated twin into `skill-library-general/` under the same filename: a rule
+   that still says what to do after the object name and the room name are removed, inputs limited
+   to live perception, gripper width, current-pose IK and the reach map, and the scene numbers
+   kept on a Calibration line with the same provenance. The next seed reads `skill-library/`
+   only. Do not copy the twin into the freeze.
 4. Append one line per seed to `campaign-state.md`: seed, attempts, outcome, skills added.
 
 A seed that fails is still evidence. Record it and move on; do not spend the campaign on one seed.
@@ -70,9 +76,11 @@ chmod -R a-w "$CAMP/skill-library-frozen"
     | xargs -0 sha256sum > frozen-manifest.sha256 )
 ```
 
-The freeze takes a **snapshot** of the shared library for this task's Stage 2. The shared library
-itself stays writable, so the next task's Stage 1 can extend it; each task keeps its own frozen
-snapshot and manifest as the immutable record of what its evaluation actually measured.
+The freeze takes a **snapshot** of `skill-library/` for this task's Stage 2. It does not include
+`skill-library-general/`. The shared scene library stays writable, so the next task's Stage 1 can
+extend it; each task keeps its own frozen snapshot and manifest as the immutable record of what
+its evaluation actually measured. Stop writing the elevated twin as well once this task's freeze
+is taken; the next task's Stage 1 resumes both files together.
 
 From this point the library, this folder's prompts, the harness config, the model and the
 protocol are all frozen. Policies are **not** frozen: every evaluation seed writes its own from
@@ -176,7 +184,7 @@ it as a policy failure. Never let a worker count a launch crash as a task failur
 
 ## Updating skills between campaigns
 
-Promote durable patterns from `skill-library/` into this folder's [skills/](skills/) files, by
-topic, with their provenance. Keep the parent's tabletop skill files untouched; a pattern that
-also applies to fixed-base arms is cross-linked, not duplicated. Never do this while a Stage 2 is
-in flight.
+Promote durable patterns from `skill-library-general/` into this folder's [skills/](skills/) files,
+by topic, and keep the Calibration provenance that points back at `skill-library/`. Keep the
+parent's tabletop skill files untouched; a pattern that also applies to fixed-base arms is
+cross-linked, not duplicated. Never do this while a Stage 2 is in flight.
